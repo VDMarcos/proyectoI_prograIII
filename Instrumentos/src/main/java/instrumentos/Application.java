@@ -11,7 +11,7 @@ public class Application {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");}
         catch (Exception ex) {};
-
+// hola anner
         window = new JFrame();
         window.setContentPane(new JTabbedPane());
 
