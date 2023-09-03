@@ -43,7 +43,8 @@ public class Controller{
                 this.search(new TipoInstrumento());
         }
         if(model.mode==2){
-
+                Service.instance().update(e);
+                this.search(new TipoInstrumento());
         }
     }
 }
