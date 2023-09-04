@@ -4,6 +4,7 @@ import instrumentos.Application;
 import instrumentos.logic.Service;
 import instrumentos.logic.TipoInstrumento;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller{
@@ -38,13 +39,39 @@ public class Controller{
     }
 
     public void save(TipoInstrumento e) throws Exception {
-        if(model.mode==1){
-                Service.instance().create(e);
-                this.search(new TipoInstrumento());
+        if (model.mode == 1) {
+            Service.instance().create(e);
+            this.search(new TipoInstrumento());
         }
-        if(model.mode==2){
-                Service.instance().update(e);
-                this.search(new TipoInstrumento());
+        //if(model.mode==2){
+        //      Service.instance().update(e);
+        //    this.search(new TipoInstrumento());
+        //}
+    }
+
+    public void del(int row) throws Exception{
+        try {
+            TipoInstrumento e = model.getList().get(row);
+
+            // Realiza la eliminación en el servicio (void)
+            Service.instance().delete(e);
+
+            // Verifica si el elemento se ha eliminado correctamente en el modelo local
+            if (model.getList().remove(e)) {
+                // Actualiza la vista con la lista modificada
+                int[] cols = {TableModel.CODIGO, TableModel.NOMBRE, TableModel.UNIDAD};
+                view.getList().setModel(new TableModel(cols, model.getList()));
+                view.getCodigo().setText("");
+                view.getNombre().setText("");
+                view.getUnidad().setText("");
+                view.getDelete().setEnabled(false);
+                view.getCodigo().setEnabled(true);
+            } else {
+                throw new Exception("Error al eliminar el elemento...");
+            }
+        } catch (Exception ex) {
+            // Manejo de excepciones si ocurre un error
+            throw ex;
         }
     }
 }

@@ -14,6 +14,11 @@ public class View implements Observer {
     private JTextField searchNombre;
     private JButton search;
     private JButton save;
+
+    public JTable getList() {
+        return list;
+    }
+
     private JTable list;
     private JButton delete;
     private JLabel searchNombreLbl;
@@ -27,6 +32,7 @@ public class View implements Observer {
     private JButton clear;
 
     public View() {
+        delete.setEnabled(false);
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,6 +53,7 @@ public class View implements Observer {
                 model.mode =2;
                 controller.edit(row);
                 codigo.setEnabled(false);
+                delete.setEnabled(true);
             }
         });
         save.addMouseListener(new MouseAdapter() {
@@ -59,6 +66,18 @@ public class View implements Observer {
                 filter.setUnidad(unidad.getText());
                 try {
                     controller.save(filter);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            }
+        });
+        delete.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = list.getSelectedRow();
+                try {
+                    controller.del(row);
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -99,6 +118,22 @@ public class View implements Observer {
                 unidad.setText(model.getCurrent().getUnidad());
             }
             this.panel.revalidate();
+    }
+
+    public JTextField getCodigo() {
+        return codigo;
+    }
+
+    public JButton getDelete() {
+        return delete;
+    }
+
+    public JTextField getNombre() {
+        return nombre;
+    }
+
+    public JTextField getUnidad() {
+        return unidad;
     }
 }
 
