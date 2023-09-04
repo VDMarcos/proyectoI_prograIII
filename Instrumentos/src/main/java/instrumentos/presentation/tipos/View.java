@@ -37,7 +37,7 @@ public class View implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    TipoInstrumento filter= new TipoInstrumento();
+                    TipoInstrumento filter = new TipoInstrumento();
                     filter.setNombre(searchNombre.getText());
                     model.mode = 1;
                     controller.search(filter);
@@ -50,7 +50,7 @@ public class View implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = list.getSelectedRow();
-                model.mode =2;
+                model.mode = 2;
                 controller.edit(row);
                 codigo.setEnabled(false);
                 delete.setEnabled(true);
@@ -59,8 +59,8 @@ public class View implements Observer {
         save.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                model.mode =1;
-                TipoInstrumento filter= new TipoInstrumento();
+                model.mode = 1;
+                TipoInstrumento filter = new TipoInstrumento();
                 filter.setNombre(nombre.getText());
                 filter.setCodigo(codigo.getText());
                 filter.setUnidad(unidad.getText());
@@ -87,6 +87,7 @@ public class View implements Observer {
         clear.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //
                 model.mode = 1;
                 codigo.setText("");
                 nombre.setText("");
@@ -115,37 +116,21 @@ public class View implements Observer {
 
     @Override
     public void update(Observable updatedModel, Object properties) {
-            int changedProps = (int) properties;
-            if ((changedProps & Model.LIST) == Model.LIST) {
-                int[] cols = {TableModel.CODIGO, TableModel.NOMBRE, TableModel.UNIDAD};
-                list.setModel(new TableModel(cols, model.getList()));
-                list.setRowHeight(30);
-                TableColumnModel columnModel = list.getColumnModel();
-                columnModel.getColumn(2).setPreferredWidth(200);
-                list.setRowSelectionInterval(0, 0);
-            }
-            if ((changedProps & Model.CURRENT) == Model.CURRENT) {
-                codigo.setText(model.getCurrent().getCodigo());
-                nombre.setText(model.getCurrent().getNombre());
-                unidad.setText(model.getCurrent().getUnidad());
-            }
-            this.panel.revalidate();
-    }
-
-    public JTextField getCodigo() {
-        return codigo;
-    }
-
-    public JButton getDelete() {
-        return delete;
-    }
-
-    public JTextField getNombre() {
-        return nombre;
-    }
-
-    public JTextField getUnidad() {
-        return unidad;
+        int changedProps = (int) properties;
+        if ((changedProps & Model.LIST) == Model.LIST) {
+            int[] cols = {TableModel.CODIGO, TableModel.NOMBRE, TableModel.UNIDAD};
+            list.setModel(new TableModel(cols, model.getList()));
+            list.setRowHeight(30);
+            TableColumnModel columnModel = list.getColumnModel();
+            columnModel.getColumn(2).setPreferredWidth(200);
+            list.setRowSelectionInterval(0, 0);
+        }
+        if ((changedProps & Model.CURRENT) == Model.CURRENT) {
+            codigo.setText(model.getCurrent().getCodigo());
+            nombre.setText(model.getCurrent().getNombre());
+            unidad.setText(model.getCurrent().getUnidad());
+        }
+        this.panel.revalidate();
     }
 }
 
