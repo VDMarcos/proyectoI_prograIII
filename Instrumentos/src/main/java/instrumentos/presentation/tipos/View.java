@@ -60,26 +60,14 @@ public class View implements Observer {
         save.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (model.mode == 1) {
-                    TipoInstrumento filter = new TipoInstrumento();
-                    filter.setNombre(nombre.getText());
-                    filter.setCodigo(codigo.getText());
-                    filter.setUnidad(unidad.getText());
-                    try {
-                        controller.save(filter);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                } else{   // solo hay dos opciones, es 1 o 2...
-                    TipoInstrumento filter = new TipoInstrumento();
-                    filter.setNombre(nombre.getText());
-                    filter.setCodigo(codigo.getText());
-                    filter.setUnidad(unidad.getText());
-                    try {
-                        controller.save(filter);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
+                TipoInstrumento filter = new TipoInstrumento();
+                filter.setNombre(nombre.getText());
+                filter.setCodigo(codigo.getText());
+                filter.setUnidad(unidad.getText());
+                try {
+                    controller.save(filter);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -122,7 +110,7 @@ public class View implements Observer {
 
     public void setModel(Model model) {
         this.model = model;
-        model.mode = 1;  //discutir con angulo
+        model.mode = 1;
         model.addObserver(this);
     }
 
