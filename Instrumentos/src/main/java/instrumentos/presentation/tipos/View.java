@@ -9,7 +9,7 @@ import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 
-// VER EL SET MODEL -> HABLAR DE ESO......
+
 public class View implements Observer {
     private JPanel panel;
     private JTextField searchNombre;
@@ -68,7 +68,7 @@ public class View implements Observer {
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
-                limpiarTextFields();
+                clearTextFields();
             }
         });
         delete.addMouseListener(new MouseAdapter() {
@@ -80,14 +80,14 @@ public class View implements Observer {
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
-                limpiarTextFields();
+                clearTextFields();
             }
         });
 
         clear.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                limpiarTextFields();
+                clearTextFields();
             }
         });
     }
@@ -128,7 +128,7 @@ public class View implements Observer {
         this.panel.revalidate();
     }
 
-    public void limpiarTextFields(){
+    public void clearTextFields(){
         model.mode = 1;
         codigo.setText(null);
         nombre.setText(null);
@@ -136,5 +136,12 @@ public class View implements Observer {
         codigo.setEnabled(true);
         delete.setEnabled(false);
     }
+    public boolean isValid(){
+        if(codigo.getText().isEmpty() || nombre.getText().isEmpty() || unidad.getText().isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
 }
 
