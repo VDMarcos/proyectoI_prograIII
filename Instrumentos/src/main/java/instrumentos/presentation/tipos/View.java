@@ -87,6 +87,7 @@ public class View implements Observer {
         clear.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                model.mode = 1;
                 codigo.setText("");
                 nombre.setText("");
                 unidad.setText("");
