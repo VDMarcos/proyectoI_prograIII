@@ -61,11 +61,6 @@ public class Controller{
                 // Actualiza la vista con la lista modificada
                 int[] cols = {TableModel.CODIGO, TableModel.NOMBRE, TableModel.UNIDAD};
                 view.getList().setModel(new TableModel(cols, model.getList()));
-                view.getCodigo().setText("");
-                view.getNombre().setText("");
-                view.getUnidad().setText("");
-                view.getDelete().setEnabled(false);
-                view.getCodigo().setEnabled(true);
             } else {
                 throw new Exception("Error al eliminar el elemento...");
             }

@@ -83,6 +83,17 @@ public class View implements Observer {
                 }
             }
         });
+
+        clear.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                codigo.setText("");
+                nombre.setText("");
+                unidad.setText("");
+                codigo.setEnabled(true);
+                delete.setEnabled(false);
+            }
+        });
     }
 
     public JPanel getPanel() {
