@@ -25,17 +25,14 @@ public class Controller{
             throw new Exception("NINGUN REGISTRO COINCIDE");
         }
         model.setList(rows);
-        //model.setCurrent(new TipoInstrumento());
         model.setCurrent(rows.get(0));
         model.commit();
     }
 
-    public void edit(int row){
+    public void edit(int row) throws Exception{
         TipoInstrumento e = model.getList().get(row);
-        try {
-            model.setCurrent(Service.instance().read(e));
-            model.commit();
-        } catch (Exception ex) {}
+        model.setCurrent(Service.instance().read(e));
+        model.commit();
     }
 
     public void save(TipoInstrumento e) throws Exception {
@@ -50,23 +47,19 @@ public class Controller{
     }
 
     public void del(int row) throws Exception{
-        try {
-            TipoInstrumento e = model.getList().get(row);
 
-            // Realiza la eliminación en el servicio (void)
-            Service.instance().delete(e);
+        TipoInstrumento e = model.getList().get(row);
+        // Realiza la eliminación en el servicio (void)
+        Service.instance().delete(e);
 
-            // Verifica si el elemento se ha eliminado correctamente en el modelo local
-            if (model.getList().remove(e)) {
-                // Actualiza la vista con la lista modificada
-                int[] cols = {TableModel.CODIGO, TableModel.NOMBRE, TableModel.UNIDAD};
-                view.getList().setModel(new TableModel(cols, model.getList()));
-            } else {
-                throw new Exception("Error al eliminar el elemento...");
-            }
-        } catch (Exception ex) {
-            // Manejo de excepciones si ocurre un error
-            throw ex;
+        // Verifica si el elemento se ha eliminado correctamente en el modelo local
+        if (model.getList().remove(e)) {
+            // Actualiza la vista con la lista modificada
+            int[] cols = {TableModel.CODIGO, TableModel.NOMBRE, TableModel.UNIDAD};
+            view.getList().setModel(new TableModel(cols, model.getList()));
+        } else {
+            throw new Exception("Error al eliminar el elemento...");
         }
+
     }
 }

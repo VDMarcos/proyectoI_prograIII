@@ -51,7 +51,11 @@ public class View implements Observer {
             public void mouseClicked(MouseEvent e) {
                 int row = list.getSelectedRow();
                 model.mode = 2;
-                controller.edit(row);
+                try {
+                    controller.edit(row);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
+                }
                 codigo.setEnabled(false);
                 delete.setEnabled(true);
             }
@@ -64,9 +68,12 @@ public class View implements Observer {
                 filter.setCodigo(codigo.getText());
                 filter.setUnidad(unidad.getText());
                 try {
+                    if(!isValid()){
+                        throw new Exception("Campos vacios");
+                    }
                     controller.save(filter);
                 } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
                 clearTextFields();
             }
@@ -78,7 +85,7 @@ public class View implements Observer {
                 try {
                     controller.del(row);
                 } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
                 clearTextFields();
             }
