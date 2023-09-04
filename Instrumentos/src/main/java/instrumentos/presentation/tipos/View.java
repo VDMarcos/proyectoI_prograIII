@@ -40,7 +40,6 @@ public class View implements Observer {
                 try {
                     TipoInstrumento filter = new TipoInstrumento();
                     filter.setNombre(searchNombre.getText());
-                    model.mode = 1;
                     controller.search(filter);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -69,6 +68,7 @@ public class View implements Observer {
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
+                limpiarTextFields();
             }
         });
         delete.addMouseListener(new MouseAdapter() {
@@ -80,19 +80,14 @@ public class View implements Observer {
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
+                limpiarTextFields();
             }
         });
 
         clear.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //
-                model.mode = 1;
-                codigo.setText("");
-                nombre.setText("");
-                unidad.setText("");
-                codigo.setEnabled(true);
-                delete.setEnabled(false);
+                limpiarTextFields();
             }
         });
     }
@@ -132,38 +127,14 @@ public class View implements Observer {
         }
         this.panel.revalidate();
     }
+
+    public void limpiarTextFields(){
+        model.mode = 1;
+        codigo.setText(null);
+        nombre.setText(null);
+        unidad.setText(null);
+        codigo.setEnabled(true);
+        delete.setEnabled(false);
+    }
 }
 
-   // public void update(Observable updatedModel, Object properties) {
-      //  int changedProps = (int) properties;
-        //if ((changedProps & Model.LIST) == Model.LIST) {
-          //  int[] cols = {TableModel.CODIGO,TableModel.NOMBRE, TableModel.UNIDAD};
-          //  list.setModel(new TableModel(cols, model.getList()));
-            //list.setRowHeight(30);
-            //TableColumnModel columnModel = list.getColumnModel();
-            //columnModel.getColumn(2).setPreferredWidth(200);
-//list.setRowSelectionInerval(0,0);
-        //}
-        //if ((changedProps & Model.CURRENT) == Model.CURRENT) {
-          //  codigo.setText(model.getCurrent().getCodigo());
-            //nombre.setText(model.getCurrent().getNombre());
-            //unidad.setText(model.getCurrent().getUnidad());
-       // }
-        //this.panel.revalidate();
-    //}
-
-//public void update(Observable updatedModel, Object properties) {
-//int changedProps = (int) properties;
-// if ((changedProps & Model.LIST) == Model.LIST) {
-//   int[] cols = {TableModel.NOMBRE, TableModel.UNIDAD};
-//           list.setModel(new TableModel(cols, model.getList()));
-//  list.setRowHeight(30);
-//  TableColumnModel columnModel = list.getColumnModel();
-//  columnModel.getColumn(1).setPreferredWidth(200);
-// }
-// if ((changedProps & Model.CURRENT) == Model.CURRENT) {
-//      nombre.setText(model.getCurrent().getNombre());
-//     unidad.setText(model.getCurrent().getUnidad());
-//  }
-//  this.panel.revalidate();
-// }

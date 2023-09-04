@@ -36,9 +36,15 @@ public class Service {
     }
 
     public void update(TipoInstrumento e) throws Exception{
-        TipoInstrumento result;
+        TipoInstrumento result = null;
+        for (TipoInstrumento i: data.getTipos()) {
+            if (i.getCodigo().equals(e.getCodigo())) {
+                result = i;
+                break;
+            }
+        }
         try{
-            result = this.read(e);
+           // result = this.read(e);
             data.getTipos().remove(result);
             data.getTipos().add(e);
         }catch (Exception ex) {
