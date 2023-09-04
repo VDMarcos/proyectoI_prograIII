@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+// Anner Andrés Angulo Gutierrez 504530978 y Marcos Emilio Vásquez Díaz 801530366
+
 //combo box de la pestanna de Instrumentos, no construirla a mano, si no, con la lista de instrumentos obtener el nommbre y mostrar las opciones...
 
 public class Application {
