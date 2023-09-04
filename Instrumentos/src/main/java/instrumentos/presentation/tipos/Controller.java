@@ -43,10 +43,10 @@ public class Controller{
             Service.instance().create(e);
             this.search(new TipoInstrumento());
         }
-        //if(model.mode==2){
-        //      Service.instance().update(e);
-        //    this.search(new TipoInstrumento());
-        //}
+        if(model.mode==2) {
+            Service.instance().update(e);
+            this.search(new TipoInstrumento());
+        }
     }
 
     public void del(int row) throws Exception{

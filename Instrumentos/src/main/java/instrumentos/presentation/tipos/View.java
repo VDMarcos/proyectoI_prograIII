@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 
+// VER EL SET MODEL -> HABLAR DE ESO......
 public class View implements Observer {
     private JPanel panel;
     private JTextField searchNombre;
@@ -59,17 +60,27 @@ public class View implements Observer {
         save.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                model.mode = 1;
-                TipoInstrumento filter = new TipoInstrumento();
-                filter.setNombre(nombre.getText());
-                filter.setCodigo(codigo.getText());
-                filter.setUnidad(unidad.getText());
-                try {
-                    controller.save(filter);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                if (model.mode == 1) {
+                    TipoInstrumento filter = new TipoInstrumento();
+                    filter.setNombre(nombre.getText());
+                    filter.setCodigo(codigo.getText());
+                    filter.setUnidad(unidad.getText());
+                    try {
+                        controller.save(filter);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } else{   // solo hay dos opciones, es 1 o 2...
+                    TipoInstrumento filter = new TipoInstrumento();
+                    filter.setNombre(nombre.getText());
+                    filter.setCodigo(codigo.getText());
+                    filter.setUnidad(unidad.getText());
+                    try {
+                        controller.save(filter);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
-
             }
         });
         delete.addMouseListener(new MouseAdapter() {
@@ -111,6 +122,7 @@ public class View implements Observer {
 
     public void setModel(Model model) {
         this.model = model;
+        model.mode = 1;  //discutir con angulo
         model.addObserver(this);
     }
 
