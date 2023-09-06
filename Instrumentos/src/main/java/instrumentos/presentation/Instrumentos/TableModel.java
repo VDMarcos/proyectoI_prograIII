@@ -1,4 +1,4 @@
-package instrumentos.presentation.tipos;
+package instrumentos.presentation.Instrumentos;
 
 import instrumentos.logic.TipoInstrumento;
 

@@ -1,9 +1,7 @@
-package instrumentos.presentation.tipos;
+package instrumentos.presentation.Instrumentos;
 
-import instrumentos.Application;
 import instrumentos.logic.TipoInstrumento;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 

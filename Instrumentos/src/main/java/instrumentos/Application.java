@@ -1,8 +1,6 @@
 package instrumentos;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
 
 // Anner Andrés Angulo Gutierrez 504530978 y Marcos Emilio Vásquez Díaz 801530366
 
@@ -25,7 +23,7 @@ public class Application {
         window.setSize(900,450);
         window.setResizable(true);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
+        window.setIconImage((new ImageIcon(Application.class.getResource("instumentosss/presentation/icons/icon.png"))).getImage());
         window.setTitle("SILAB: Sistema de Laboratorio Industrial");
         window.setVisible(true);
     }
