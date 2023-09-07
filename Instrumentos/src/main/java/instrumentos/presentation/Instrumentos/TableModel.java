@@ -1,15 +1,15 @@
 package instrumentos.presentation.Instrumentos;
 
-import instrumentos.logic.TipoInstrumento;
+import instrumentos.logic.Instrumentos;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class TableModel extends AbstractTableModel implements javax.swing.table.TableModel {
-    List<TipoInstrumento> rows;
+    List<Instrumentos> rows;
     int[] cols;
 
-    public TableModel(int[] cols, List<TipoInstrumento> rows){
+    public TableModel(int[] cols, List<Instrumentos> rows){
         this.cols=cols;
         this.rows=rows;
         initColNames();
@@ -34,28 +34,35 @@ public class TableModel extends AbstractTableModel implements javax.swing.table.
     }
 
     public Object getValueAt(int row, int col) {
-        TipoInstrumento sucursal = rows.get(row);
+        Instrumentos sucursal = rows.get(row);
         switch (cols[col]){
-            case CODIGO: return sucursal.getCodigo();
-            case NOMBRE: return sucursal.getNombre();
-            case UNIDAD: return sucursal.getUnidad();
+            case SERIE: return sucursal.getSerie();
+            case DESCRIPCION: return sucursal.getDescripcion();
+            case MINIMO: return sucursal.getMinimo();
+            case MAXIMO: return sucursal.getMaximo();
+            case TOlERANCIA: return sucursal.getTolerancia();
             default: return "";
         }
     }
 
-    public TipoInstrumento getRowAt(int row) {
+    public Instrumentos getRowAt(int row) {
         return rows.get(row);
     }
 
-    public static final int CODIGO=0;
-    public static final int NOMBRE=1;
-    public static final int UNIDAD=2;
+    public static final int SERIE=0;
+    public static final int DESCRIPCION=1;
+    public static final int MINIMO=2;
+    public static final int MAXIMO=3;
+    public static final int TOlERANCIA=4;
 
     String[] colNames = new String[6];
     private void initColNames(){
-        colNames[CODIGO]= "Codigo";
-        colNames[NOMBRE]= "Nombre";
-        colNames[UNIDAD]= "Unidad";
+        colNames[SERIE]= "No. Serie";
+        colNames[DESCRIPCION]= "Descripcion";
+        colNames[MINIMO]= "Minimo";
+        colNames[MAXIMO]= "Maximo";
+        colNames[TOlERANCIA]= "Tolerancia";
+
     }
 
 }

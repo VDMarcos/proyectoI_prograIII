@@ -57,4 +57,42 @@ public class Service {
                 .collect(Collectors.toList());
     }
 
+    //================= INSTRUMENTOS ============
+
+    public void create(Instrumentos e) throws Exception{
+        Instrumentos result = data.getInstrumentos().stream()
+                .filter(i->i.getSerie().equals(e.getSerie())).findFirst().orElse(null);
+        if (result==null) data.getInstrumentos().add(e);
+        else throw new Exception("Tipo ya existe");
+    }
+
+    public Instrumentos read(Instrumentos e) throws Exception{
+        Instrumentos result = data.getInstrumentos().stream()
+                .filter(i->i.getSerie().equals(e.getDescripcion())).findFirst().orElse(null);
+        if (result!=null) return result;
+        else throw new Exception("Tipo no existe");
+    }
+
+    public void update(Instrumentos e) throws Exception{
+        Instrumentos result = null;
+        try{
+            result = this.read(e);
+            data.getInstrumentos().remove(result);
+            data.getInstrumentos().add(e);
+        }catch (Exception ex) {
+            throw new Exception("Tipo no existe");
+        }
+    }
+
+    public void delete(Instrumentos e) throws Exception{
+        data.getInstrumentos().remove(e);
+    }
+
+    public List<Instrumentos> search(Instrumentos e){
+        return data.getInstrumentos().stream()
+                .filter(i->i.getSerie().contains(e.getSerie()))
+                .sorted(Comparator.comparing(Instrumentos::getSerie))
+                .collect(Collectors.toList());
+    }
+
  }

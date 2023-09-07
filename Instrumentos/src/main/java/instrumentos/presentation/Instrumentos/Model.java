@@ -1,16 +1,15 @@
 package instrumentos.presentation.Instrumentos;
 
-import instrumentos.logic.TipoInstrumento;
+import instrumentos.logic.Instrumentos;
 
 import java.util.List;
 import java.util.Observer;
 
 public class Model extends java.util.Observable{
-    List<TipoInstrumento> list;
-    TipoInstrumento current;
+    List<Instrumentos> list;
+    Instrumentos current;
 
     int mode;
-    String SEXO;
     int changedProps = NONE;
 
     @Override
@@ -28,23 +27,23 @@ public class Model extends java.util.Observable{
     public Model() {
     }
 
-    public void init(List<TipoInstrumento> list){
+    public void init(List<Instrumentos> list){
         setList(list);
-        setCurrent(new TipoInstrumento());
+        setCurrent(new Instrumentos());
     }
 
-    public List<TipoInstrumento> getList() {
+    public List<Instrumentos> getList() {
         return list;
     }
-    public void setList(List<TipoInstrumento> list){
+    public void setList(List<Instrumentos> list){
         this.list = list;
         changedProps +=LIST;
     }
 
-    public TipoInstrumento getCurrent() {
+    public Instrumentos getCurrent() {
         return current;
     }
-    public void setCurrent(TipoInstrumento current) {
+    public void setCurrent(Instrumentos current) {
         changedProps +=CURRENT;
         this.current = current;
     }

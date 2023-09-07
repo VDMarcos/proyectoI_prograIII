@@ -1,6 +1,6 @@
 package instrumentos.presentation.Instrumentos;
 
-import instrumentos.logic.TipoInstrumento;
+import instrumentos.logic.Instrumentos;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
@@ -26,13 +26,17 @@ public class View implements Observer {
     private JButton delete;
     private JLabel searchNombreLbl;
     private JButton report;
-    private JTextField codigo;
-    private JTextField nombre;
-    private JTextField unidad;
-    private JLabel codigoLbl;
-    private JLabel nombreLbl;
-    private JLabel unidadLbl;
+    private JTextField serie;
+    private JTextField minimo;
+    private JTextField descripcion;
+    private JLabel serieLbl;
+    private JLabel minimoLbl;
+    private JLabel descripcionLbl;
     private JButton clear;
+    private JLabel toleranciaLbl;
+    private JTextField tolerancia;
+    private JLabel maximoLbl;
+    private JTextField maximo;
 
     public View() {
         delete.setEnabled(false);
@@ -40,7 +44,7 @@ public class View implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    TipoInstrumento filter = new TipoInstrumento();
+                    Instrumentos filter = new Instrumentos();
                     filter.setNombre(searchNombre.getText());
                     controller.search(filter);
                 } catch (Exception ex) {
@@ -58,17 +62,17 @@ public class View implements Observer {
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
-                codigo.setEnabled(false);
+                serie.setEnabled(false);
                 delete.setEnabled(true);
             }
         });
         save.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                TipoInstrumento filter = new TipoInstrumento();
-                filter.setNombre(nombre.getText());
-                filter.setCodigo(codigo.getText());
-                filter.setUnidad(unidad.getText());
+                Instrumentos filter = new Instrumentos();
+                filter.setNombre(minimo.getText());
+                filter.setCodigo(serie.getText());
+                filter.setUnidad(descripcion.getText());
                 try {
                     if(!isValid()){
                         throw new Exception("Campos vacios");
@@ -130,23 +134,23 @@ public class View implements Observer {
             list.setRowSelectionInterval(0, 0);
         }
         if ((changedProps & Model.CURRENT) == Model.CURRENT) {
-            codigo.setText(model.getCurrent().getCodigo());
-            nombre.setText(model.getCurrent().getNombre());
-            unidad.setText(model.getCurrent().getUnidad());
+            serie.setText(model.getCurrent().getCodigo());
+            minimo.setText(model.getCurrent().getNombre());
+            descripcion.setText(model.getCurrent().getUnidad());
         }
         this.panel.revalidate();
     }
 
     public void clearTextFields(){
         model.mode = 1;
-        codigo.setText(null);
-        nombre.setText(null);
-        unidad.setText(null);
-        codigo.setEnabled(true);
+        serie.setText(null);
+        minimo.setText(null);
+        descripcion.setText(null);
+        serie.setEnabled(true);
         delete.setEnabled(false);
     }
     public boolean isValid(){
-        if(codigo.getText().isEmpty() || nombre.getText().isEmpty() || unidad.getText().isEmpty()){
+        if(serie.getText().isEmpty() || minimo.getText().isEmpty() || descripcion.getText().isEmpty()){
             return false;
         }
         return true;
