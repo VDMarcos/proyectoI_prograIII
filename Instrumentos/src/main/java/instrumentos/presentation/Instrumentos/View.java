@@ -1,6 +1,8 @@
 package instrumentos.presentation.Instrumentos;
 
+import instrumentos.Application;
 import instrumentos.logic.Instrumentos;
+import instrumentos.logic.TipoInstrumento;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
@@ -38,7 +40,7 @@ public class View implements Observer {
     private JTextField tolerancia;
     private JLabel maximoLbl;
     private JTextField maximo;
-    private JComboBox comboTipo;
+    private JComboBox tipo;
     private JLabel tipoLbl;
     private JTable list2;
 
@@ -60,7 +62,7 @@ public class View implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = list.getSelectedRow();
-                model.mode = 2;
+                model.setMode(Application.MODE_EDIT);
                 try {
                     controller.edit(row);
                 } catch (Exception ex) {
@@ -138,6 +140,12 @@ public class View implements Observer {
             list.setRowHeight(30);
             TableColumnModel columnModel = list.getColumnModel();
             columnModel.getColumn(2).setPreferredWidth(200);
+        }
+        if((changedProps & Model.TYPES)== Model.TYPES){
+            tipo.setModel(new DefaultComboBoxModel(model.getListTypes().toArray(new TipoInstrumento[0])));
+            if(model.getMode() == Application.MODE_EDIT){
+                tipo.setSelectedItem(model.getCurrent().getTipo());
+            }
         }
         if ((changedProps & Model.CURRENT) == Model.CURRENT) {
             serie.setText(model.getCurrent().getSerie());
