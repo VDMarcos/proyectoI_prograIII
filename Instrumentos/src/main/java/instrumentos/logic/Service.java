@@ -95,4 +95,42 @@ public class Service {
                 .collect(Collectors.toList());
     }
 
+    //================= Calibraciones ============
+
+    public void create(Calibraciones e) throws Exception {
+        Calibraciones result = data.getCalibraciones().stream()
+                .filter(i -> i.getNumero() == (e.getNumero())).findFirst().orElse(null);
+        if (result == null) data.getCalibraciones().add(e);
+        else throw new Exception("Tipo ya existe");
+    }
+
+    public Calibraciones read(Calibraciones e) throws Exception{
+        Calibraciones result = data.getCalibraciones().stream()
+                .filter(i->i.getNumero()==(e.getNumero())).findFirst().orElse(null);
+        if (result!=null) return result;
+        else throw new Exception("Tipo no existe");
+    }
+
+    public void update(Calibraciones e) throws Exception{
+        Calibraciones result = null;
+        try{
+            result = this.read(e);
+            data.getCalibraciones().remove(result);
+            data.getCalibraciones().add(e);
+        }catch (Exception ex) {
+            throw new Exception("Tipo no existe");
+        }
+    }
+
+    public void delete(Calibraciones e) throws Exception{
+        data.getCalibraciones().remove(e);
+    }
+
+    public List<Calibraciones> search(Calibraciones e){
+        return data.getCalibraciones().stream()
+                .filter(i->i.getNumero()==(e.getNumero()))
+                .sorted(Comparator.comparing(Calibraciones::getNumero))  // lo cambiamos a ::getUNidad en clase, pero estaba en ::getNombre...
+                .collect(Collectors.toList());
+    }
+
  }

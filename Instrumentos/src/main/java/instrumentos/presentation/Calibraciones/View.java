@@ -1,21 +1,21 @@
-package instrumentos.presentation.Instrumentos;
+package instrumentos.presentation.Calibraciones;
 
+import instrumentos.logic.Calibraciones;
 import instrumentos.logic.Instrumentos;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
-import java.awt.event.*;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-//import java.awt.event.MouseAdapter;
-//import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
 
 public class View implements Observer {
     private JPanel panel;
-    private JTextField searchDescripcion;
+    private JTextField searchNum;
     private JButton search;
     private JButton save;
 
@@ -24,32 +24,30 @@ public class View implements Observer {
     }
 
     private JTable list;
-    private JButton delete;
-    private JLabel searchDescripLbl;
-    private JButton report;
-    private JTextField serie;
-    private JTextField minimo;
-    private JTextField descripcion;
-    private JLabel serieLbl;
-    private JLabel minimoLbl;
-    private JLabel descripcionLbl;
-    private JButton clear;
-    private JLabel toleranciaLbl;
-    private JTextField tolerancia;
-    private JLabel maximoLbl;
-    private JTextField maximo;
-    private JComboBox comboTipo;
-    private JLabel tipoLbl;
+
+    public JTable getList2() { return list2; }
     private JTable list2;
+    private JButton delete;
+    private JLabel searchNumLbl;
+    private JButton report;
+    private JTextField numero;
+    private JTextField mediciones;
+    private JTextField fecha;
+    private JLabel numeroLbl;
+    private JLabel medicionesLbl;
+    private JButton clear;
+    private JLabel fechaLbl;
 
     public View() {
         delete.setEnabled(false);
+
+        list2.setEnabled(false);
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Instrumentos filter = new Instrumentos();
-                    filter.setDescripcion(searchDescripcion.getText());
+                    Calibraciones filter = new Calibraciones();
+                    filter.setNumero(Integer.parseInt(numero.getText()));
                     controller.search(filter);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -59,6 +57,7 @@ public class View implements Observer {
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                list2.setEnabled(true);
                 int row = list.getSelectedRow();
                 model.mode = 2;
                 try {
@@ -66,21 +65,18 @@ public class View implements Observer {
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
-                serie.setEnabled(false);
+                numero.setEnabled(false);
                 delete.setEnabled(true);
             }
         });
         save.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Instrumentos filter = new Instrumentos();
-                filter.setDescripcion(descripcion.getText());
-                filter.setSerie(serie.getText());
-
+                Calibraciones filter = new Calibraciones();
                 try {
-                    filter.setMinimo(Integer.parseInt(minimo.getText()));
-                    filter.setMaximo(Integer.parseInt(maximo.getText()));
-                    filter.setTolerancia(Integer.parseInt(tolerancia.getText()));
+                    filter.setFecha(fecha.getText());
+                    filter.setNumero(Integer.parseInt(numero.getText()));
+                    filter.setMediciones(Integer.parseInt(mediciones.getText()));
                     if(!isValid()){
                         throw new Exception("Campos vacios");
                     }
@@ -133,19 +129,19 @@ public class View implements Observer {
     public void update(Observable updatedModel, Object properties) {
         int changedProps = (int) properties;
         if ((changedProps & Model.LIST) == Model.LIST) {
-            int[] cols = {TableModel.SERIE, TableModel.DESCRIPCION, TableModel.MINIMO, TableModel.MAXIMO, TableModel.TOLERANCIA};
+            int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
             list.setModel(new TableModel(cols, model.getList()));
             list.setRowHeight(30);
             TableColumnModel columnModel = list.getColumnModel();
             columnModel.getColumn(2).setPreferredWidth(200);
         }
         if ((changedProps & Model.CURRENT) == Model.CURRENT) {
-            serie.setText(model.getCurrent().getSerie());
-            descripcion.setText(model.getCurrent().getDescripcion());
+            numero.setText(String.valueOf(model.getCurrent().getNumero()));
+            fecha.setText(model.getCurrent().getFecha());
             try {
-                minimo.setText(String.valueOf(model.getCurrent().getMinimo()));
-                maximo.setText(String.valueOf(model.getCurrent().getMaximo()));
-                tolerancia.setText(String.valueOf(model.getCurrent().getTolerancia()));
+                numero.setText(String.valueOf(model.getCurrent().getNumero()));
+                mediciones.setText(String.valueOf(model.getCurrent().getMediciones()));
+                fecha.setText(model.getCurrent().getFecha());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -156,21 +152,17 @@ public class View implements Observer {
 
     public void clearTextFields(){
         model.mode = 1;
-        serie.setText(null);
-        minimo.setText(null);
-        descripcion.setText(null);
-        tolerancia.setText(null);
-        maximo.setText(null);
-        serie.setEnabled(true);
+        numero.setText(null);
+        mediciones.setText(null);
+        fecha.setText(null);
         delete.setEnabled(false);
     }
     public boolean isValid(){
-        if(serie.getText().isEmpty() || minimo.getText().isEmpty() || descripcion.getText().isEmpty() || tolerancia.getText().isEmpty() || maximo.getText().isEmpty()){
+        if(numero.getText().isEmpty() || mediciones.getText().isEmpty() || fecha.getText().isEmpty() ){
             return false;
         }
         return true;
     }
-
 
 }
 
