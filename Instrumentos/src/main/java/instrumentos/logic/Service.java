@@ -68,7 +68,7 @@ public class Service {
 
     public Instrumentos read(Instrumentos e) throws Exception{
         Instrumentos result = data.getInstrumentos().stream()
-                .filter(i->i.getSerie().equals(e.getDescripcion())).findFirst().orElse(null);
+                .filter(i->i.getSerie().equals(e.getSerie())).findFirst().orElse(null);
         if (result!=null) return result;
         else throw new Exception("Tipo no existe");
     }

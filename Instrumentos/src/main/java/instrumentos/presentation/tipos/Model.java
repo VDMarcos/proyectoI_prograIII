@@ -12,7 +12,6 @@ public class Model extends java.util.Observable{
     TipoInstrumento current;
 
     int mode;
-    String SEXO;
     int changedProps = NONE;
 
     @Override

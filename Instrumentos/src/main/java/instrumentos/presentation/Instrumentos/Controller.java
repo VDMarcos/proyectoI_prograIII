@@ -53,8 +53,8 @@ public class Controller{
         // Verifica si el elemento se ha eliminado correctamente en el modelo local
         if (model.getList().remove(e)) {
             // Actualiza la vista con la lista modificada
-           // int[] cols = {TableModel.CODIGO, TableModel.NOMBRE, TableModel.UNIDAD};
-            //view.getList().setModel(new TableModel(cols, model.getList()));
+           int[] cols = {TableModel.SERIE, TableModel.DESCRIPCION, TableModel.MINIMO, TableModel.MAXIMO, TableModel.TOLERANCIA};
+           view.getList().setModel(new TableModel(cols, model.getList()));
         } else {
             throw new Exception("Error al eliminar el elemento...");
         }
