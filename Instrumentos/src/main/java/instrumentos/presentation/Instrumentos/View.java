@@ -139,7 +139,6 @@ public class View implements Observer {
             list.setRowHeight(30);
             TableColumnModel columnModel = list.getColumnModel();
             columnModel.getColumn(2).setPreferredWidth(200);
-            list.setRowSelectionInterval(0, 0);
         }
         if ((changedProps & Model.CURRENT) == Model.CURRENT) {
             serie.setText(model.getCurrent().getSerie());
@@ -173,8 +172,6 @@ public class View implements Observer {
         return true;
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
+
 }
 
