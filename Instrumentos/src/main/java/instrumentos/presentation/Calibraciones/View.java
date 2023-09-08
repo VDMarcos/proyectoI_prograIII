@@ -41,7 +41,7 @@ public class View implements Observer {
     public View() {
         delete.setEnabled(false);
 
-        list2.setEnabled(false);
+        list2.setVisible(false);
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

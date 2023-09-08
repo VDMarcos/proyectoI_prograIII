@@ -1,6 +1,10 @@
 package instrumentos;
 
+import instrumentos.logic.Service;
+
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 // Anner Andrés Angulo Gutierrez 504530978 y Marcos Emilio Vásquez Díaz 801530366
 
@@ -13,6 +17,13 @@ public class Application {
         catch (Exception ex) {ex.printStackTrace();}
         window = new JFrame();
         window.setContentPane(new JTabbedPane());
+        window.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e){
+                super.windowClosing(e);
+                Service.instance().stop();
+            }
+        });
 
         instrumentos.presentation.tipos.Model tiposModel= new instrumentos.presentation.tipos.Model();
         instrumentos.presentation.tipos.View tiposView = new instrumentos.presentation.tipos.View();
@@ -43,4 +54,7 @@ public class Application {
 
     public static instrumentos.presentation.Calibraciones.Controller CalibracionesController;
     public static JFrame window;
+
+    public static int MODE_CREATE =1;
+    public static int MODE_EDIT = 2;
 }

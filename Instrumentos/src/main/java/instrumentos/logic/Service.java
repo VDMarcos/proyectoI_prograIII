@@ -1,6 +1,7 @@
 package instrumentos.logic;
 
 import instrumentos.data.Data;
+import instrumentos.data.XmlPersister;
 
 import java.text.DecimalFormat;
 import java.util.Comparator;
@@ -17,7 +18,21 @@ public class Service {
     private Data data;
 
     private Service(){
-        data = new Data();
+        try{
+            data = XmlPersister.instance().load();
+        }
+        catch (Exception e){
+            data = new Data();
+        }
+
+    }
+
+    public void stop(){
+        try{
+            XmlPersister.instance().store(data);
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     //================= TIPOS DE INSTRUMENTO ============
@@ -98,10 +113,14 @@ public class Service {
     //================= Calibraciones ============
 
     public void create(Calibraciones e) throws Exception {
-        Calibraciones result = data.getCalibraciones().stream()
-                .filter(i -> i.getNumero() == (e.getNumero())).findFirst().orElse(null);
-        if (result == null) data.getCalibraciones().add(e);
-        else throw new Exception("Tipo ya existe");
+        boolean exists = data.getCalibraciones().stream()
+                .anyMatch(i -> i.getNumero() == e.getNumero());
+
+        if (!exists) {
+            data.getCalibraciones().add(e);
+        } else {
+            throw new Exception("Tipo ya existe");
+        }
     }
 
     public Calibraciones read(Calibraciones e) throws Exception{

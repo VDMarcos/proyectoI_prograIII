@@ -5,15 +5,28 @@
  */
 package instrumentos.logic;
 
+import jakarta.xml.bind.annotation.*;
+
 import java.util.Objects;
 
+import java.util.List;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Instrumentos {
+
+    @XmlID
     String serie;
+    @XmlIDREF
     String descripcion;
     int minimo;
     int maximo;
     int tolerancia;
     TipoInstrumento tipo;
+    @XmlIDREF
+    @XmlElementWrapper(name = "Calibraciones")
+    @XmlElement(name = "Calibracion")
+
+    List<Calibraciones> calibraciones;
 
     public Instrumentos() {
         this("","", 0, 0, 0, new TipoInstrumento());
