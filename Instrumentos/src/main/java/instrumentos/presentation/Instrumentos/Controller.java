@@ -1,7 +1,9 @@
 package instrumentos.presentation.Instrumentos;
 
+import instrumentos.Application;
 import instrumentos.logic.Service;
 import instrumentos.logic.Instrumento;
+import instrumentos.logic.TipoInstrumento;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ public class Controller{
         this.model = model;
         view.setController(this);
         view.setModel(model);
+        model.setListTypes(Service.instance().search(new TipoInstrumento()));
+        model.commit();
     }
 
     public void search(Instrumento filter) throws  Exception{
@@ -59,5 +63,14 @@ public class Controller{
             throw new Exception("Error al eliminar el elemento...");
         }
 
+    }
+    public void clear(){
+        model.setCurrent(new Instrumento());
+        model.setMode(Application.MODE_CREATE);
+        model.commit();
+    }
+    public void shown(){
+        model.setListTypes(Service.instance().search(new TipoInstrumento()));
+        model.commit();
     }
 }

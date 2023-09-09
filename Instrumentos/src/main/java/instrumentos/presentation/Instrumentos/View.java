@@ -46,6 +46,13 @@ public class View implements Observer {
 
     public View() {
         delete.setEnabled(false);
+
+        panel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                controller.shown();
+            }
+        });
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,6 +90,7 @@ public class View implements Observer {
                     filter.setMinimo(Integer.parseInt(minimo.getText()));
                     filter.setMaximo(Integer.parseInt(maximo.getText()));
                     filter.setTolerancia(Integer.parseInt(tolerancia.getText()));
+                    filter.setTipo((TipoInstrumento) tipo.getSelectedItem());
                     if(!isValid()){
                         throw new Exception("Campos vacios");
                     }
@@ -127,7 +135,7 @@ public class View implements Observer {
 
     public void setModel(Model model) {
         this.model = model;
-        model.mode = 1;
+        model.setMode(Application.MODE_CREATE);
         model.addObserver(this);
     }
 
@@ -154,6 +162,7 @@ public class View implements Observer {
                 minimo.setText(String.valueOf(model.getCurrent().getMinimo()));
                 maximo.setText(String.valueOf(model.getCurrent().getMaximo()));
                 tolerancia.setText(String.valueOf(model.getCurrent().getTolerancia()));
+                tipo.setSelectedItem(model.getCurrent().getTipo());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -163,17 +172,13 @@ public class View implements Observer {
     }
 
     public void clearTextFields(){
-        model.mode = 1;
-        serie.setText(null);
-        minimo.setText(null);
-        descripcion.setText(null);
-        tolerancia.setText(null);
-        maximo.setText(null);
+        controller.clear();
+
         serie.setEnabled(true);
         delete.setEnabled(false);
     }
     public boolean isValid(){
-        if(serie.getText().isEmpty() || minimo.getText().isEmpty() || descripcion.getText().isEmpty() || tolerancia.getText().isEmpty() || maximo.getText().isEmpty()){
+        if(serie.getText().isEmpty() || minimo.getText().isEmpty() || descripcion.getText().isEmpty() || tolerancia.getText().isEmpty() || maximo.getText().isEmpty() || tipo.getSelectedItem() == null){
             return false;
         }
         return true;

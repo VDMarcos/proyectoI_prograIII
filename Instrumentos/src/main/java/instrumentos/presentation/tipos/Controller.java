@@ -33,6 +33,7 @@ public class Controller{
         model.setMode(Application.MODE_EDIT);
         TipoInstrumento e = model.getList().get(row);
         model.setCurrent(Service.instance().read(e));
+        model.setMode(Application.MODE_EDIT);
         model.commit();
     }
 
