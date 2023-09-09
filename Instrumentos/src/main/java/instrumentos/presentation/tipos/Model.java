@@ -12,6 +12,15 @@ public class Model extends java.util.Observable{
     TipoInstrumento current;
 
     int mode;
+
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
     int changedProps = NONE;
 
     @Override

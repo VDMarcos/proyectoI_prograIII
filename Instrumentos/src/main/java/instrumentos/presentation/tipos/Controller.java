@@ -32,15 +32,16 @@ public class Controller{
     public void edit(int row) throws Exception{
         TipoInstrumento e = model.getList().get(row);
         model.setCurrent(Service.instance().read(e));
+        model.setMode(Application.MODE_EDIT);
         model.commit();
     }
 
     public void save(TipoInstrumento e) throws Exception {
-        if (model.mode == 1) {
+        if (model.getMode() == 1) {
             Service.instance().create(e);
             this.search(new TipoInstrumento());
         }
-        if(model.mode==2) {
+        if(model.getMode() == 2) {
             Service.instance().update(e);
             this.search(new TipoInstrumento());
         }
