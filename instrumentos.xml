@@ -1,1 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><data><tipos/></data>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><data><tipos><tipo><codigo>BAR</codigo><nombre>Barometro</nombre><unidad>Grados</unidad></tipo><tipo><codigo>VOL</codigo><nombre>Voltimetro </nombre><unidad>Voltimetro</unidad></tipo></tipos><instrumentos><serie>12b12j1</serie><descripcion>Barometro nuevo</descripcion><minimo>0</minimo><maximo>0</maximo><tolerancia>0</tolerancia><tipo>VOL</tipo></instrumentos></data>
