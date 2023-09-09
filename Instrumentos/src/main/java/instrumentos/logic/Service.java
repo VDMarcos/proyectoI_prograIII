@@ -3,7 +3,6 @@ package instrumentos.logic;
 import instrumentos.data.Data;
 import instrumentos.data.XmlPersister;
 
-import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -74,22 +73,22 @@ public class Service {
 
     //================= INSTRUMENTOS ============
 
-    public void create(Instrumentos e) throws Exception{
-        Instrumentos result = data.getInstrumentos().stream()
+    public void create(Instrumento e) throws Exception{
+        Instrumento result = data.getInstrumentos().stream()
                 .filter(i->i.getSerie().equals(e.getSerie())).findFirst().orElse(null);
         if (result==null) data.getInstrumentos().add(e);
         else throw new Exception("Tipo ya existe");
     }
 
-    public Instrumentos read(Instrumentos e) throws Exception{
-        Instrumentos result = data.getInstrumentos().stream()
+    public Instrumento read(Instrumento e) throws Exception{
+        Instrumento result = data.getInstrumentos().stream()
                 .filter(i->i.getSerie().equals(e.getSerie())).findFirst().orElse(null);
         if (result!=null) return result;
         else throw new Exception("Tipo no existe");
     }
 
-    public void update(Instrumentos e) throws Exception{
-        Instrumentos result = null;
+    public void update(Instrumento e) throws Exception{
+        Instrumento result = null;
         try{
             result = this.read(e);
             data.getInstrumentos().remove(result);
@@ -99,14 +98,14 @@ public class Service {
         }
     }
 
-    public void delete(Instrumentos e) throws Exception{
+    public void delete(Instrumento e) throws Exception{
         data.getInstrumentos().remove(e);
     }
 
-    public List<Instrumentos> search(Instrumentos e){
+    public List<Instrumento> search(Instrumento e){
         return data.getInstrumentos().stream()
                 .filter(i->i.getSerie().contains(e.getSerie()))
-                .sorted(Comparator.comparing(Instrumentos::getSerie))
+                .sorted(Comparator.comparing(Instrumento::getSerie))
                 .collect(Collectors.toList());
     }
 

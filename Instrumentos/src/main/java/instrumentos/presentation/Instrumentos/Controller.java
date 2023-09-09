@@ -1,7 +1,7 @@
 package instrumentos.presentation.Instrumentos;
 
 import instrumentos.logic.Service;
-import instrumentos.logic.Instrumentos;
+import instrumentos.logic.Instrumento;
 
 import java.util.List;
 
@@ -10,15 +10,15 @@ public class Controller{
     Model model;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Instrumentos()));
+        model.init(Service.instance().search(new Instrumento()));
         this.view = view;
         this.model = model;
         view.setController(this);
         view.setModel(model);
     }
 
-    public void search(Instrumentos filter) throws  Exception{
-        List<Instrumentos> rows = Service.instance().search(filter);
+    public void search(Instrumento filter) throws  Exception{
+        List<Instrumento> rows = Service.instance().search(filter);
         if (rows.isEmpty()){
             throw new Exception("NINGUN REGISTRO COINCIDE");
         }
@@ -28,25 +28,25 @@ public class Controller{
     }
 
     public void edit(int row) throws Exception{
-        Instrumentos e = model.getList().get(row);
+        Instrumento e = model.getList().get(row);
         model.setCurrent(Service.instance().read(e));
         model.commit();
     }
 
-    public void save(Instrumentos e) throws Exception {
+    public void save(Instrumento e) throws Exception {
         if (model.mode == 1) {
             Service.instance().create(e);
-            this.search(new Instrumentos());
+            this.search(new Instrumento());
         }
         if(model.mode==2) {
             Service.instance().update(e);
-            this.search(new Instrumentos());
+            this.search(new Instrumento());
         }
     }
 
     public void del(int row) throws Exception{
 
-        Instrumentos e = model.getList().get(row);
+        Instrumento e = model.getList().get(row);
         // Realiza la eliminación en el servicio (void)
         Service.instance().delete(e);
 

@@ -1,15 +1,15 @@
 package instrumentos.presentation.Instrumentos;
 
-import instrumentos.logic.Instrumentos;
+import instrumentos.logic.Instrumento;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class TableModel extends AbstractTableModel implements javax.swing.table.TableModel {
-    List<Instrumentos> rows;
+    List<Instrumento> rows;
     int[] cols;
 
-    public TableModel(int[] cols, List<Instrumentos> rows){
+    public TableModel(int[] cols, List<Instrumento> rows){
         this.cols=cols;
         this.rows=rows;
         initColNames();
@@ -34,7 +34,7 @@ public class TableModel extends AbstractTableModel implements javax.swing.table.
     }
 
     public Object getValueAt(int row, int col) {
-        Instrumentos sucursal = rows.get(row);
+        Instrumento sucursal = rows.get(row);
         switch (cols[col]){
             case SERIE: return sucursal.getSerie();
             case DESCRIPCION: return sucursal.getDescripcion();
@@ -45,7 +45,7 @@ public class TableModel extends AbstractTableModel implements javax.swing.table.
         }
     }
 
-    public Instrumentos getRowAt(int row) {
+    public Instrumento getRowAt(int row) {
         return rows.get(row);
     }
 

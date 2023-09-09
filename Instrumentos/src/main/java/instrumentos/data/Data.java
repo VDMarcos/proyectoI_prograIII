@@ -1,7 +1,7 @@
 package instrumentos.data;
 
 import instrumentos.logic.Calibraciones;
-import instrumentos.logic.Instrumentos;
+import instrumentos.logic.Instrumento;
 import instrumentos.logic.TipoInstrumento;
 import jakarta.xml.bind.annotation.*;
 
@@ -21,16 +21,16 @@ public class Data {
     }
 
     private List<Calibraciones> calibraciones;
-    public List<Instrumentos> getInstrumentos() {
+    public List<Instrumento> getInstrumentos() {
         return instrumentos;
     }
 
-    private List<Instrumentos> instrumentos;
+    private List<Instrumento> instrumentos;
 
     public Data() {
         tipos = new ArrayList<>();
         instrumentos = new ArrayList<>();
-        calibraciones = new ArrayList<>();
+        //calibraciones = new ArrayList<>();
 
         //tipos.add(new TipoInstrumento("TER","Termómetro","Grados Celcius") );
         //tipos.add(new TipoInstrumento("BAR","Barómetro","PSI") );

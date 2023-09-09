@@ -1,7 +1,6 @@
 package instrumentos.presentation.Calibraciones;
 
 import instrumentos.logic.Calibraciones;
-import instrumentos.logic.Instrumentos;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;

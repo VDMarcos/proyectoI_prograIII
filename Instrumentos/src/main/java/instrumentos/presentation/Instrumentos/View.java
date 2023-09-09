@@ -1,7 +1,7 @@
 package instrumentos.presentation.Instrumentos;
 
 import instrumentos.Application;
-import instrumentos.logic.Instrumentos;
+import instrumentos.logic.Instrumento;
 import instrumentos.logic.TipoInstrumento;
 
 import javax.swing.*;
@@ -50,7 +50,7 @@ public class View implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Instrumentos filter = new Instrumentos();
+                    Instrumento filter = new Instrumento();
                     filter.setDescripcion(searchDescripcion.getText());
                     controller.search(filter);
                 } catch (Exception ex) {
@@ -75,7 +75,7 @@ public class View implements Observer {
         save.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Instrumentos filter = new Instrumentos();
+                Instrumento filter = new Instrumento();
                 filter.setDescripcion(descripcion.getText());
                 filter.setSerie(serie.getText());
 

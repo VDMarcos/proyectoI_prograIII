@@ -9,30 +9,28 @@ import jakarta.xml.bind.annotation.*;
 
 import java.util.Objects;
 
-import java.util.List;
-
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Instrumentos {
+public class Instrumento {
 
     @XmlID
     String serie;
-    @XmlIDREF
     String descripcion;
     int minimo;
     int maximo;
     int tolerancia;
-    TipoInstrumento tipo;
     @XmlIDREF
-    @XmlElementWrapper(name = "Calibraciones")
-    @XmlElement(name = "Calibracion")
+    TipoInstrumento tipo;
+   // @XmlIDREF
+    //@XmlElementWrapper(name = "Calibraciones")
+    //@XmlElement(name = "Calibracion")
 
-    List<Calibraciones> calibraciones;
+    //List<Calibraciones> calibraciones;
 
-    public Instrumentos() {
+    public Instrumento() {
         this("","", 0, 0, 0, new TipoInstrumento());
     }
 
-    public Instrumentos(String serie, String descripcion, int minimo, int maximo, int tolerancia, TipoInstrumento tipoInstrumento) {
+    public Instrumento(String serie, String descripcion, int minimo, int maximo, int tolerancia, TipoInstrumento tipoInstrumento) {
         this.serie = serie;
         //region Description
         this.descripcion = descripcion;
@@ -113,7 +111,7 @@ public class Instrumentos {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Instrumentos other = (Instrumentos) obj;
+        final Instrumento other = (Instrumento) obj;
         if (!Objects.equals(this.serie, other.serie)) {
             return false;
         }

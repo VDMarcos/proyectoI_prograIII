@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Calibraciones {
 
-    Instrumentos instrumento;
+    Instrumento instrumento;
 
     String fecha;
 
@@ -13,21 +13,21 @@ public class Calibraciones {
     int mediciones;
 
     public Calibraciones() {
-        this(new Instrumentos(), "", 0, 0);
+        this(new Instrumento(), "", 0, 0);
     }
 
-    public Calibraciones(Instrumentos inst, String fecha, int numero, int mediciones) {
+    public Calibraciones(Instrumento inst, String fecha, int numero, int mediciones) {
         this.instrumento = inst;
         this.fecha = fecha;
         this.numero = numero;
         this.mediciones = mediciones;
     }
 
-    public Instrumentos getInstrumento() {
+    public Instrumento getInstrumento() {
         return instrumento;
     }
 
-    public void setInstrumento(Instrumentos instrumento) {
+    public void setInstrumento(Instrumento instrumento) {
         this.instrumento = instrumento;
     }
 
