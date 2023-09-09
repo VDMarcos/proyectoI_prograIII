@@ -1,5 +1,6 @@
 package instrumentos.presentation.Calibraciones;
 
+import instrumentos.Application;
 import instrumentos.logic.Calibraciones;
 
 import java.util.List;
@@ -8,6 +9,14 @@ import java.util.Observer;
 public class Model extends java.util.Observable{
     List<Calibraciones> list;
     Calibraciones current;
+
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = Application.MODE_CREATE;
+    }
 
     int mode;
     int changedProps = NONE;

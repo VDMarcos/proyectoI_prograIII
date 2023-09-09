@@ -56,7 +56,6 @@ public class TableModel extends AbstractTableModel implements javax.swing.table.
         colNames[NUMERO]= "Número";
         colNames[FECHA]= "Fecha";
         colNames[MEDICIONES]= "Mediciones";
-
     }
 
 }

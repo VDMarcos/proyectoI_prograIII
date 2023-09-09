@@ -30,7 +30,7 @@ public class Data {
     public Data() {
         tipos = new ArrayList<>();
         instrumentos = new ArrayList<>();
-        //calibraciones = new ArrayList<>();
+        calibraciones = new ArrayList<>();
 
         //tipos.add(new TipoInstrumento("TER","Termómetro","Grados Celcius") );
         //tipos.add(new TipoInstrumento("BAR","Barómetro","PSI") );

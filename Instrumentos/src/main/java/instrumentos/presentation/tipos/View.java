@@ -50,7 +50,6 @@ public class View implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = list.getSelectedRow();
-                model.mode = 2;
                 try {
                     controller.edit(row);
                 } catch (Exception ex) {
@@ -112,7 +111,7 @@ public class View implements Observer {
 
     public void setModel(Model model) {
         this.model = model;
-        model.mode = 1;
+        model.setMode(Application.MODE_CREATE);
         model.addObserver(this);
     }
 
@@ -136,7 +135,7 @@ public class View implements Observer {
     }
 
     public void clearTextFields(){
-        model.mode = 1;
+        model.setMode(Application.MODE_CREATE);
         codigo.setText(null);
         nombre.setText(null);
         unidad.setText(null);

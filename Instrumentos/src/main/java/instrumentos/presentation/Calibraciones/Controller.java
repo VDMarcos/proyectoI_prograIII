@@ -1,7 +1,8 @@
 package instrumentos.presentation.Calibraciones;
 
-import instrumentos.logic.Calibraciones;
+import instrumentos.Application;
 import instrumentos.logic.Service;
+import instrumentos.logic.Calibraciones;
 
 import java.util.List;
 
@@ -28,17 +29,18 @@ public class Controller{
     }
 
     public void edit(int row) throws Exception{
+        model.setMode(Application.MODE_EDIT);
         Calibraciones e = model.getList().get(row);
         model.setCurrent(Service.instance().read(e));
         model.commit();
     }
 
     public void save(Calibraciones e) throws Exception {
-        if (model.mode == 1) {
+        if (model.getMode() == 1) {
             Service.instance().create(e);
             this.search(new Calibraciones());
         }
-        if(model.mode==2) {
+        if(model.getMode() == 2) {
             Service.instance().update(e);
             this.search(new Calibraciones());
         }
@@ -53,8 +55,8 @@ public class Controller{
         // Verifica si el elemento se ha eliminado correctamente en el modelo local
         if (model.getList().remove(e)) {
             // Actualiza la vista con la lista modificada
-           int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
-           view.getList().setModel(new TableModel(cols, model.getList()));
+            int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
+            view.getList().setModel(new TableModel(cols, model.getList()));
         } else {
             throw new Exception("Error al eliminar el elemento...");
         }

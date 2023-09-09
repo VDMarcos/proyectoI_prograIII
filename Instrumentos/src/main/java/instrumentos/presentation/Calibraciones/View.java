@@ -1,5 +1,6 @@
 package instrumentos.presentation.Calibraciones;
 
+import instrumentos.Application;
 import instrumentos.logic.Calibraciones;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ import java.util.Observer;
 
 public class View implements Observer {
     private JPanel panel;
-    private JTextField searchNum;
+    private JTextField searchNumero;
     private JButton search;
     private JButton save;
 
@@ -23,30 +24,28 @@ public class View implements Observer {
     }
 
     private JTable list;
-
-    public JTable getList2() { return list2; }
-    private JTable list2;
     private JButton delete;
-    private JLabel searchNumLbl;
+    private JLabel searchNumeroLbl;
     private JButton report;
     private JTextField numero;
     private JTextField mediciones;
     private JTextField fecha;
     private JLabel numeroLbl;
     private JLabel medicionesLbl;
-    private JButton clear;
     private JLabel fechaLbl;
+    private JButton clear;
+    private JTable list2;
+    private JPanel Mediciones;
 
     public View() {
         delete.setEnabled(false);
-
-        list2.setVisible(false);
+        Mediciones.setVisible(false);
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     Calibraciones filter = new Calibraciones();
-                    filter.setNumero(Integer.parseInt(numero.getText()));
+                    filter.setNumero(Integer.parseInt(searchNumero.getText()));
                     controller.search(filter);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -56,10 +55,9 @@ public class View implements Observer {
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                list2.setEnabled(true);
                 int row = list.getSelectedRow();
-                model.mode = 2;
                 try {
+                    Mediciones.setVisible(true);
                     controller.edit(row);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -72,10 +70,10 @@ public class View implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Calibraciones filter = new Calibraciones();
+                filter.setMediciones(Integer.parseInt(mediciones.getText()));
+                filter.setNumero(Integer.parseInt(numero.getText()));
+                filter.setFecha(fecha.getText());
                 try {
-                    filter.setFecha(fecha.getText());
-                    filter.setNumero(Integer.parseInt(numero.getText()));
-                    filter.setMediciones(Integer.parseInt(mediciones.getText()));
                     if(!isValid()){
                         throw new Exception("Campos vacios");
                     }
@@ -120,7 +118,7 @@ public class View implements Observer {
 
     public void setModel(Model model) {
         this.model = model;
-        model.mode = 1;
+        model.setMode(Application.MODE_CREATE);
         model.addObserver(this);
     }
 
@@ -133,31 +131,26 @@ public class View implements Observer {
             list.setRowHeight(30);
             TableColumnModel columnModel = list.getColumnModel();
             columnModel.getColumn(2).setPreferredWidth(200);
+            //list.setRowSelectionInterval(0, 0);
         }
         if ((changedProps & Model.CURRENT) == Model.CURRENT) {
             numero.setText(String.valueOf(model.getCurrent().getNumero()));
+            mediciones.setText(String.valueOf(model.getCurrent().getMediciones()));
             fecha.setText(model.getCurrent().getFecha());
-            try {
-                numero.setText(String.valueOf(model.getCurrent().getNumero()));
-                mediciones.setText(String.valueOf(model.getCurrent().getMediciones()));
-                fecha.setText(model.getCurrent().getFecha());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
         }
         this.panel.revalidate();
     }
 
     public void clearTextFields(){
-        model.mode = 1;
+        model.setMode(Application.MODE_CREATE);
         numero.setText(null);
         mediciones.setText(null);
         fecha.setText(null);
+        numero.setEnabled(true);
         delete.setEnabled(false);
     }
     public boolean isValid(){
-        if(numero.getText().isEmpty() || mediciones.getText().isEmpty() || fecha.getText().isEmpty() ){
+        if(numero.getText().isEmpty() || mediciones.getText().isEmpty() || fecha.getText().isEmpty()){
             return false;
         }
         return true;
