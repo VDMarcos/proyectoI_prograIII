@@ -5,6 +5,7 @@ import instrumentos.data.XmlPersister;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Service {
@@ -112,14 +113,11 @@ public class Service {
     //================= Calibraciones ============
 
     public void create(Calibraciones e) throws Exception {
-        boolean exists = data.getCalibraciones().stream()
-                .anyMatch(i -> i.getNumero() == e.getNumero());
-
-        if (!exists) {
-            data.getCalibraciones().add(e);
-        } else {
-            throw new Exception("Tipo ya existe");
-        }
+        //Calibraciones result = data.getCalibraciones().stream()
+          //      .filter(i-> Objects.equals(i.getNumero(), e.getNumero())).findFirst().orElse(null);
+        //if (result==null)
+        data.getCalibraciones().add(e);
+        //else throw new Exception("Tipo ya existe");
     }
 
     public Calibraciones read(Calibraciones e) throws Exception{
@@ -146,7 +144,7 @@ public class Service {
 
     public List<Calibraciones> search(Calibraciones e){
         return data.getCalibraciones().stream()
-                .filter(i->i.getNumero()==(e.getNumero()))
+                .filter(i->i.getNumero()!=(e.getNumero()))
                 .sorted(Comparator.comparing(Calibraciones::getNumero))  // lo cambiamos a ::getUNidad en clase, pero estaba en ::getNombre...
                 .collect(Collectors.toList());
     }

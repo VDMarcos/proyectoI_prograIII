@@ -4,31 +4,39 @@ import java.util.Objects;
 
 public class Calibraciones {
 
-    Instrumento instrumento;
+    static Instrumento instrumento;
 
     String fecha;
 
-    int numero;
-
     int mediciones;
 
+    int numero;
     public Calibraciones() {
-        this(new Instrumento(), "", 0, 0);
+       this(new Instrumento(), "", 0);
     }
 
-    public Calibraciones(Instrumento inst, String fecha, int numero, int mediciones) {
+    private static int ultiNumero = 1;
+
+    public Calibraciones(Instrumento inst, String fecha, int mediciones) {
         this.instrumento = inst;
         this.fecha = fecha;
-        this.numero = numero;
         this.mediciones = mediciones;
+
+        // Establece el valor de numero siempre en 0
+        this.numero = 0;
+
+        if (mediciones != 0) {
+            this.numero = ultiNumero;
+            ultiNumero++;
+        }
     }
 
-    public Instrumento getInstrumento() {
+    public static Instrumento getInstrumento() {
         return instrumento;
     }
 
-    public void setInstrumento(Instrumento instrumento) {
-        this.instrumento = instrumento;
+    public static void setInstrumento(Instrumento instrumen) {
+        instrumento = instrumen;
     }
 
     public String getFecha() {
@@ -43,8 +51,8 @@ public class Calibraciones {
         return numero;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setNumero(int nu) {
+        this.numero = nu;         //solucionar...
     }
 
     public int getMediciones() {
@@ -68,3 +76,5 @@ public class Calibraciones {
         return Objects.hash(instrumento, fecha, numero, mediciones);
     }
 }
+
+

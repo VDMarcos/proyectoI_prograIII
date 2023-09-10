@@ -2,6 +2,8 @@ package instrumentos.presentation.Calibraciones;
 
 import instrumentos.Application;
 import instrumentos.logic.Calibraciones;
+import instrumentos.logic.Instrumento;
+import instrumentos.logic.TipoInstrumento;
 
 import java.util.List;
 import java.util.Observer;
@@ -10,12 +12,18 @@ public class Model extends java.util.Observable{
     List<Calibraciones> list;
     Calibraciones current;
 
+    public Instrumento getInstrumento() {
+        return instrumento;
+    }
+
+    Instrumento instrumento;
+
     public int getMode() {
         return mode;
     }
 
     public void setMode(int mode) {
-        this.mode = Application.MODE_CREATE;
+        this.mode = mode;
     }
 
     int mode;
@@ -41,6 +49,9 @@ public class Model extends java.util.Observable{
         setCurrent(new Calibraciones());
     }
 
+    public void setInstrumento(Instrumento instru) {
+        instrumento=instru;
+    }
     public List<Calibraciones> getList() {
         return list;
     }
@@ -60,4 +71,5 @@ public class Model extends java.util.Observable{
     public static int NONE=0;
     public static int LIST=1;
     public static int CURRENT=2;
+
 }

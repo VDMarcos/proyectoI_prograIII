@@ -1,6 +1,7 @@
 package instrumentos.presentation.Instrumentos;
 
 import instrumentos.Application;
+import instrumentos.logic.Calibraciones;
 import instrumentos.logic.Service;
 import instrumentos.logic.Instrumento;
 import instrumentos.logic.TipoInstrumento;
@@ -33,6 +34,7 @@ public class Controller{
 
     public void edit(int row) throws Exception{
         Instrumento e = model.getList().get(row);
+        Calibraciones.setInstrumento(e);
         model.setCurrent(Service.instance().read(e));
         model.commit();
     }

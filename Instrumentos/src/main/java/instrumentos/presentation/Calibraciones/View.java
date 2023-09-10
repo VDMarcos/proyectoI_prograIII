@@ -2,13 +2,12 @@ package instrumentos.presentation.Calibraciones;
 
 import instrumentos.Application;
 import instrumentos.logic.Calibraciones;
+import instrumentos.logic.Instrumento;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -36,10 +35,19 @@ public class View implements Observer {
     private JButton clear;
     private JTable list2;
     private JPanel Mediciones;
+    private JTextField instruField;
 
     public View() {
         delete.setEnabled(false);
         Mediciones.setVisible(false);
+        instruField.setForeground(Color.RED);
+        instruField.setEnabled(false);
+        panel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                instruField.setText(controller.shown());
+            }
+        });
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,6 +64,7 @@ public class View implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = list.getSelectedRow();
+                model.setMode(Application.MODE_EDIT);
                 try {
                     Mediciones.setVisible(true);
                     controller.edit(row);
@@ -69,10 +78,10 @@ public class View implements Observer {
         save.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Calibraciones filter = new Calibraciones();
-                filter.setMediciones(Integer.parseInt(mediciones.getText()));
-                filter.setNumero(Integer.parseInt(numero.getText()));
-                filter.setFecha(fecha.getText());
+                Calibraciones filter = new Calibraciones(null,fecha.getText(),Integer.parseInt(mediciones.getText()));
+                //filter.setMediciones(Integer.parseInt(mediciones.getText()));
+                //filter.setFecha(fecha.getText());
+               // filter.setNumero(Integer.parseInt(numero.getText()));
                 try {
                     if(!isValid()){
                         throw new Exception("Campos vacios");

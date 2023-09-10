@@ -80,10 +80,7 @@ public class Instrumento {
     public void setMinimo(int minimo) {
         this.minimo = minimo;
     }
-    
-    public String toString(){
-        return this.descripcion;
-    }
+
 
     public TipoInstrumento getTipo() {
         return tipo;

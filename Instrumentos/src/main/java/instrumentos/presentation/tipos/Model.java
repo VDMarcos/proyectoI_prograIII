@@ -11,14 +11,6 @@ public class Model extends java.util.Observable{
     List<TipoInstrumento> list;
     TipoInstrumento current;
 
-    public int getMode() {
-        return mode;
-    }
-
-    public void setMode(int mode) {
-        this.mode = Application.MODE_CREATE;
-    }
-
     int mode;
 
     public int getMode() {

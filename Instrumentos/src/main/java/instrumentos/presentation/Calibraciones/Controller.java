@@ -1,12 +1,13 @@
 package instrumentos.presentation.Calibraciones;
 
 import instrumentos.Application;
+import instrumentos.logic.Instrumento;
 import instrumentos.logic.Service;
 import instrumentos.logic.Calibraciones;
 
 import java.util.List;
 
-public class Controller{
+public class Controller {
     View view;
     Model model;
 
@@ -18,9 +19,9 @@ public class Controller{
         view.setModel(model);
     }
 
-    public void search(Calibraciones filter) throws  Exception{
+    public void search(Calibraciones filter) throws Exception {
         List<Calibraciones> rows = Service.instance().search(filter);
-        if (rows.isEmpty()){
+        if (rows.isEmpty()) {
             throw new Exception("NINGUN REGISTRO COINCIDE");
         }
         model.setList(rows);
@@ -28,10 +29,10 @@ public class Controller{
         model.commit();
     }
 
-    public void edit(int row) throws Exception{
+    public void edit(int row) throws Exception {     //cambiado
         model.setMode(Application.MODE_EDIT);
         Calibraciones e = model.getList().get(row);
-        model.setCurrent(Service.instance().read(e));
+        model.setCurrent(e);
         model.commit();
     }
 
@@ -40,13 +41,13 @@ public class Controller{
             Service.instance().create(e);
             this.search(new Calibraciones());
         }
-        if(model.getMode() == 2) {
+        if (model.getMode() == 2) {
             Service.instance().update(e);
             this.search(new Calibraciones());
         }
     }
 
-    public void del(int row) throws Exception{
+    public void del(int row) throws Exception {
 
         Calibraciones e = model.getList().get(row);
         // Realiza la eliminación en el servicio (void)
@@ -54,6 +55,7 @@ public class Controller{
 
         // Verifica si el elemento se ha eliminado correctamente en el modelo local
         if (model.getList().remove(e)) {
+            updateNumerosSecuenciales();
             // Actualiza la vista con la lista modificada
             int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
             view.getList().setModel(new TableModel(cols, model.getList()));
@@ -61,5 +63,24 @@ public class Controller{
             throw new Exception("Error al eliminar el elemento...");
         }
 
+    }
+
+    private void updateNumerosSecuenciales() {
+        List<Calibraciones> calibracionesList = model.getList();
+        for (int i = 0; i < calibracionesList.size(); i++) {
+            Calibraciones calibracion = calibracionesList.get(i);
+            calibracion.setNumero(i + 1); // Actualiza el número secuencial
+        }
+    }
+
+    public String shown() {      //conversar con anner
+        model.setInstrumento(Calibraciones.getInstrumento());
+        String textoInstrumento;
+        if (model.getInstrumento() != null) {
+            textoInstrumento = model.getInstrumento().getSerie() + " - " + model.getInstrumento().getDescripcion()+"("+model.getInstrumento().getMinimo()+"-"+model.getInstrumento().getMaximo()+" Grados Celsius)";
+        } else {
+            textoInstrumento = "Ningún instrumento seleccionado.";
+        }
+        return textoInstrumento;
     }
 }
