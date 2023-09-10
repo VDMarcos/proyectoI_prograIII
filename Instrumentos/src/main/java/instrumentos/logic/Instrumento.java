@@ -7,6 +7,8 @@ package instrumentos.logic;
 
 import jakarta.xml.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -24,7 +26,15 @@ public class Instrumento {
     //@XmlElementWrapper(name = "Calibraciones")
     //@XmlElement(name = "Calibracion")
 
-    //List<Calibraciones> calibraciones;
+    public List<Calibraciones> getCalibraciones() {
+        return calibraciones;
+    }
+
+    public void setCalibraciones(List<Calibraciones> calibraciones) {
+        this.calibraciones = calibraciones;
+    }
+
+    List<Calibraciones> calibraciones = new ArrayList<>();
 
     public Instrumento() {
         this("","", 0, 0, 0, new TipoInstrumento());

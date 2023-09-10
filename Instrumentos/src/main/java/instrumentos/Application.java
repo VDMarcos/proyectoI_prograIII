@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 //combo box de la pestanna de Instrumentos, no construirla a mano, si no, con la lista de instrumentos obtener el nommbre y mostrar las opciones...
 
 public class Application {
+    //cuadnos se borra el instrumento igual queda seleccinado en Calibraciones...
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");}

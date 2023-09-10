@@ -6,6 +6,7 @@ import instrumentos.logic.Service;
 import instrumentos.logic.Calibraciones;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Controller {
     View view;
@@ -15,6 +16,7 @@ public class Controller {
         model.init(Service.instance().search(new Calibraciones()));
         this.view = view;
         this.model = model;
+        this.shown();
         view.setController(this);
         view.setModel(model);
     }
@@ -37,8 +39,12 @@ public class Controller {
     }
 
     public void save(Calibraciones e) throws Exception {
+        if (model.getInstrumento().getSerie() == "") {
+            throw new Exception("No hay instrumento seleccionado");
+        }
         if (model.getMode() == 1) {
             Service.instance().create(e);
+            //model.getInstrumento().getCalibraciones().add(e);
             this.search(new Calibraciones());
         }
         if (model.getMode() == 2) {
@@ -73,14 +79,24 @@ public class Controller {
         }
     }
 
-    public String shown() {      //conversar con anner
+    public String shown() {
         model.setInstrumento(Calibraciones.getInstrumento());
+
         String textoInstrumento;
-        if (model.getInstrumento() != null) {
-            textoInstrumento = model.getInstrumento().getSerie() + " - " + model.getInstrumento().getDescripcion()+"("+model.getInstrumento().getMinimo()+"-"+model.getInstrumento().getMaximo()+" Grados Celsius)";
+        if (!model.getInstrumento().getSerie().isEmpty()) {
+            textoInstrumento = model.getInstrumento().getSerie() + " - " + model.getInstrumento().getDescripcion() + "(" + model.getInstrumento().getMinimo() + "-" + model.getInstrumento().getMaximo() + " Grados Celsius)";
+
+            // Filtra las calibraciones del instrumento actual
+            List<Calibraciones> calibracionesDelInstrumento = model.getInstrumento().getCalibraciones();
+
+            // Actualiza la tabla con la lista filtrada de calibraciones
+            int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
+            view.getList().setModel(new TableModel(cols, calibracionesDelInstrumento));
         } else {
             textoInstrumento = "Ningún instrumento seleccionado.";
         }
         return textoInstrumento;
     }
+
+
 }

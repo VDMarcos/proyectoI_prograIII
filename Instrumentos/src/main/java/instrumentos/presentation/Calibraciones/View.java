@@ -35,16 +35,15 @@ public class View implements Observer {
     private JButton clear;
     private JTable list2;
     private JPanel Mediciones;
-    private JTextField instruField;
+    private JLabel instruField;
 
     public View() {
         delete.setEnabled(false);
         Mediciones.setVisible(false);
-        instruField.setForeground(Color.RED);
-        instruField.setEnabled(false);
         panel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
+                instruField.setForeground(Color.RED);
                 instruField.setText(controller.shown());
             }
         });
