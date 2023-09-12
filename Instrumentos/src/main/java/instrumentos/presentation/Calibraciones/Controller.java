@@ -13,20 +13,21 @@ public class Controller {
     Model model;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Calibraciones()));
         this.view = view;
         this.model = model;
+        model.init(Service.instance().search(model.getInstrumento(), new Calibraciones()));
         this.shown();
         view.setController(this);
         view.setModel(model);
     }
 
-    public void search(Calibraciones filter) throws Exception {
-        List<Calibraciones> rows = Service.instance().search(filter);
+    public void search(Instrumento instru, Calibraciones filter) throws Exception {   // hay que pasarle instrumento tambien
+        List<Calibraciones> rows = Service.instance().search(instru, filter);
         if (rows.isEmpty()) {
             throw new Exception("NINGUN REGISTRO COINCIDE");
         }
         model.setList(rows);
+        model.getInstrumento().setCalibraciones(rows);
         model.setCurrent(rows.get(0));
         model.commit();
     }
@@ -43,13 +44,13 @@ public class Controller {
             throw new Exception("No hay instrumento seleccionado");
         }
         if (model.getMode() == 1) {
-            Service.instance().create(e);
+            Service.instance().create(model.getInstrumento(), e);
             //model.getInstrumento().getCalibraciones().add(e);
-            this.search(new Calibraciones());
+            this.search(model.getInstrumento(), new Calibraciones());
         }
         if (model.getMode() == 2) {
-            Service.instance().update(e);
-            this.search(new Calibraciones());
+            Service.instance().update(model.getInstrumento(), e);
+            this.search(model.getInstrumento(), new Calibraciones());
         }
     }
 
@@ -57,14 +58,15 @@ public class Controller {
 
         Calibraciones e = model.getList().get(row);
         // Realiza la eliminación en el servicio (void)
-        Service.instance().delete(e);
+        Service.instance().delete(model.getInstrumento(), e);
 
         // Verifica si el elemento se ha eliminado correctamente en el modelo local
-        if (model.getList().remove(e)) {
+        if (model.getInstrumento().getCalibraciones().remove(e)) {
             updateNumerosSecuenciales();
             // Actualiza la vista con la lista modificada
             int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
             view.getList().setModel(new TableModel(cols, model.getList()));
+            model.getCurrent().disminuirCantidad();
         } else {
             throw new Exception("Error al eliminar el elemento...");
         }

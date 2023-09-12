@@ -53,7 +53,7 @@ public class View implements Observer {
                 try {
                     Calibraciones filter = new Calibraciones();
                     filter.setNumero(Integer.parseInt(searchNumero.getText()));
-                    controller.search(filter);
+                    controller.search(model.getInstrumento(), filter);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -109,6 +109,7 @@ public class View implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 clearTextFields();
+                Mediciones.setVisible(false);
             }
         });
     }

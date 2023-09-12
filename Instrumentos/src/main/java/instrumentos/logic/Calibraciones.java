@@ -39,6 +39,10 @@ public class Calibraciones {
         instrumento = instrumen;
     }
 
+    public void disminuirCantidad(){
+        ultiNumero--;
+    }
+
     public String getFecha() {
         return fecha;
     }

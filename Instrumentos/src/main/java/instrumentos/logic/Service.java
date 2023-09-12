@@ -112,39 +112,44 @@ public class Service {
 
     //================= Calibraciones ============
 
-    public void create(Calibraciones e) throws Exception {
+    public void create(Instrumento instru, Calibraciones e) throws Exception {   //cambiado...
         //Calibraciones result = data.getCalibraciones().stream()
           //      .filter(i-> Objects.equals(i.getNumero(), e.getNumero())).findFirst().orElse(null);
         //if (result==null)
-        data.getCalibraciones().add(e);
+        instru.getCalibraciones().add(e);
+        //data.getCalibraciones().add(e);
 
         //else throw new Exception("Tipo ya existe");
     }
 
-    public Calibraciones read(Calibraciones e) throws Exception{
-        Calibraciones result = data.getCalibraciones().stream()
+    public Calibraciones read(Instrumento instru, Calibraciones e) throws Exception{
+        Calibraciones result = instru.getCalibraciones().stream()
                 .filter(i->i.getNumero()==(e.getNumero())).findFirst().orElse(null);
         if (result!=null) return result;
         else throw new Exception("Tipo no existe");
     }
 
-    public void update(Calibraciones e) throws Exception{
+    public void update(Instrumento instru, Calibraciones e) throws Exception{
         Calibraciones result = null;
         try{
-            result = this.read(e);
-            data.getCalibraciones().remove(result);
-            data.getCalibraciones().add(e);
+            result = this.read(instru, e);
+            instru.getCalibraciones().remove(result);
+            instru.getCalibraciones().add(e);
         }catch (Exception ex) {
             throw new Exception("Tipo no existe");
         }
     }
 
-    public void delete(Calibraciones e) throws Exception{
-        data.getCalibraciones().remove(e);
+    public void delete(Instrumento instru, Calibraciones e) throws Exception{
+        instru.getCalibraciones().remove(e);
     }
 
-    public List<Calibraciones> search(Calibraciones e){
-        return data.getCalibraciones().stream()
+    public List<Calibraciones> search(Instrumento instru, Calibraciones e){
+        if(instru == null){
+            Instrumento ins = new Instrumento();
+            return ins.getCalibraciones();
+        }
+        return instru.getCalibraciones().stream()
                 .filter(i->i.getNumero()!=(e.getNumero()))
                 .sorted(Comparator.comparing(Calibraciones::getNumero))  // lo cambiamos a ::getUNidad en clase, pero estaba en ::getNombre...
                 .collect(Collectors.toList());
