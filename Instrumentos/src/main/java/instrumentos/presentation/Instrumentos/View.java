@@ -1,6 +1,7 @@
 package instrumentos.presentation.Instrumentos;
 
 import instrumentos.Application;
+import instrumentos.logic.Calibraciones;
 import instrumentos.logic.Instrumento;
 import instrumentos.logic.TipoInstrumento;
 
@@ -117,6 +118,7 @@ public class View implements Observer {
         clear.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                Calibraciones.setInstrumento(new Instrumento());
                 clearTextFields();
             }
         });
