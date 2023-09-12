@@ -52,15 +52,19 @@ public class Controller{
 
         TipoInstrumento e = model.getList().get(row);
         // Realiza la eliminación en el servicio (void)
-        Service.instance().delete(e);
+        if(Service.instance().validateDelete(e) == 0) {
+            Service.instance().delete(e);
 
-        // Verifica si el elemento se ha eliminado correctamente en el modelo local
-        if (model.getList().remove(e)) {
-            // Actualiza la vista con la lista modificada
-            int[] cols = {TableModel.CODIGO, TableModel.NOMBRE, TableModel.UNIDAD};
-            view.getList().setModel(new TableModel(cols, model.getList()));
-        } else {
-            throw new Exception("Error al eliminar el elemento...");
+            // Verifica si el elemento se ha eliminado correctamente en el modelo local
+            if (model.getList().remove(e)) {
+                // Actualiza la vista con la lista modificada
+                int[] cols = {TableModel.CODIGO, TableModel.NOMBRE, TableModel.UNIDAD};
+                view.getList().setModel(new TableModel(cols, model.getList()));
+            } else {
+                throw new Exception("Error al eliminar el elemento...");
+            }
+        }else {
+            throw new Exception("No se puede eliminar el Tipo, ya que tiene instancias");
         }
 
     }

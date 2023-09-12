@@ -96,6 +96,18 @@ public class View implements Observer {
                 clearTextFields();
             }
         });
+
+        report.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+
+                }
+                catch (Exception ex){
+
+                }
+            }
+        });
     }
 
     public JPanel getPanel() {

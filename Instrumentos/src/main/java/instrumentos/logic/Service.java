@@ -74,6 +74,10 @@ public class Service {
 
     //================= INSTRUMENTOS ============
 
+    public long validateDelete(TipoInstrumento e){
+        return data.getInstrumentos().stream()
+                .filter(i->i.getTipo().getCodigo().equals(e.getCodigo())).count();
+    }
     public void create(Instrumento e) throws Exception{
         Instrumento result = data.getInstrumentos().stream()
                 .filter(i->i.getSerie().equals(e.getSerie())).findFirst().orElse(null);
@@ -154,5 +158,6 @@ public class Service {
                 .sorted(Comparator.comparing(Calibraciones::getNumero))  // lo cambiamos a ::getUNidad en clase, pero estaba en ::getNombre...
                 .collect(Collectors.toList());
     }
+
 
  }
