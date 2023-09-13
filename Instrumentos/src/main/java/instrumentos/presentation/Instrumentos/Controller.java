@@ -76,4 +76,5 @@ public class Controller{
         model.setListTypes(Service.instance().search(new TipoInstrumento()));
         model.commit();
     }
+
 }
