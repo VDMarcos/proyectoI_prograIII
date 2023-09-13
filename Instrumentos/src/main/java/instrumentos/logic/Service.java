@@ -120,6 +120,9 @@ public class Service {
         //Calibraciones result = data.getCalibraciones().stream()
           //      .filter(i-> Objects.equals(i.getNumero(), e.getNumero())).findFirst().orElse(null);
         //if (result==null)
+        int num;
+        num=instru.getCalibraciones().size()+1;
+        e.setNumero(num);
         instru.getCalibraciones().add(e);
         //data.getCalibraciones().add(e);
 
@@ -144,8 +147,8 @@ public class Service {
         }
     }
 
-    public void delete(Instrumento instru, Calibraciones e) throws Exception{
-        instru.getCalibraciones().remove(e);
+    public void delete(Instrumento instr, Calibraciones e) throws Exception{
+        instr.getCalibraciones().remove(e);
     }
 
     public List<Calibraciones> search(Instrumento instru, Calibraciones e){

@@ -35,7 +35,7 @@ public class Controller {
 
     public void edit(int row) throws Exception {     //cambiado
         model.setMode(Application.MODE_EDIT);
-        Calibraciones e = model.getList().get(row);
+        Calibraciones e = model.getInstrumento().getCalibraciones().get(row);
         model.setCurrent(e);
         model.commit();
     }
@@ -57,20 +57,21 @@ public class Controller {
 
     public void del(int row) throws Exception {
 
-        Calibraciones e = model.getList().get(row);
+        Calibraciones e = model.getInstrumento().getCalibraciones().get(row);
         // Realiza la eliminación en el servicio (void)
         Service.instance().delete(model.getInstrumento(), e);
 
         // Verifica si el elemento se ha eliminado correctamente en el modelo local
-        if (model.getInstrumento().getCalibraciones().remove(e)) {
-            updateNumerosSecuenciales();
-            // Actualiza la vista con la lista modificada
-            int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
-            view.getList().setModel(new TableModel(cols, model.getInstrumento().getCalibraciones()));
-            model.getCurrent().disminuirCantidad();
-        } else {
-            throw new Exception("Error al eliminar el elemento...");
-        }
+        //if (model.getInstrumento().getCalibraciones().remove(e)) {
+        //updateNumerosSecuenciales();
+        // Actualiza la vista con la lista modificada
+        int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
+        view.getList().setModel(new TableModel(cols, model.getInstrumento().getCalibraciones()));
+        //actualizar numero
+        //model.getCurrent().disminuirCantidad();
+        //} else {
+        //  throw new Exception("Error al eliminar el elemento...");
+        //}
 
     }
 

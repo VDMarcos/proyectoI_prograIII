@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Calibraciones {
 
-    static Instrumento instrumento;
+    static Instrumento instrumento;     //static???
 
     String fecha;
 
@@ -15,7 +15,6 @@ public class Calibraciones {
        this(new Instrumento(), "", 0);
     }
 
-    private static int ultiNumero = 1;
 
     public Calibraciones(Instrumento inst, String fecha, int mediciones) {
         this.instrumento = inst;
@@ -25,10 +24,9 @@ public class Calibraciones {
         // Establece el valor de numero siempre en 0
         this.numero = 0;
 
-        if (mediciones != 0) {
-            this.numero = ultiNumero;
-            ultiNumero++;
-        }
+        //if (mediciones != 0) {
+           // this.numero = 0;
+        //}
     }
 
     public static Instrumento getInstrumento() {
@@ -39,9 +37,9 @@ public class Calibraciones {
         instrumento = instrumen;
     }
 
-    public void disminuirCantidad(){
-        ultiNumero--;
-    }
+    //public void disminuirCantidad(){
+      //  ultiNumero--;
+    //}
 
     public String getFecha() {
         return fecha;
@@ -55,9 +53,7 @@ public class Calibraciones {
         return numero;
     }
 
-    public void setNumero(int nu) {
-        this.numero = nu;         //solucionar...
-    }
+    public void setNumero(int nu) { this.numero = nu; }
 
     public int getMediciones() {
         return mediciones;

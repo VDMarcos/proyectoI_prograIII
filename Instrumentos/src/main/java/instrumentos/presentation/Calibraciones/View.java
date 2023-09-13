@@ -45,6 +45,8 @@ public class View implements Observer {
             public void componentShown(ComponentEvent e) {
                 instruField.setForeground(Color.RED);
                 instruField.setText(controller.shown());
+                clearTextFields();  //agregado por los loles
+                Mediciones.setVisible(false);  //agregado por los loles
             }
         });
         search.addActionListener(new ActionListener() {
