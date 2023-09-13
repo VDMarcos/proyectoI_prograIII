@@ -1,11 +1,14 @@
 package instrumentos.presentation.Calibraciones;
 
 import instrumentos.logic.Calibraciones;
+import instrumentos.logic.Instrumento;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class TableModel extends AbstractTableModel implements javax.swing.table.TableModel {
+
+    Instrumento inst;
     List<Calibraciones> rows;
     int[] cols;
 

@@ -136,7 +136,7 @@ public class View implements Observer {
         int changedProps = (int) properties;
         if ((changedProps & Model.LIST) == Model.LIST) {
             int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
-            list.setModel(new TableModel(cols, model.getList()));
+            list.setModel(new TableModel(cols, model.getInstrumento().getCalibraciones()));
             list.setRowHeight(30);
             TableColumnModel columnModel = list.getColumnModel();
             columnModel.getColumn(2).setPreferredWidth(200);

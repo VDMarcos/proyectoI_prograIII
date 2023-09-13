@@ -5,6 +5,7 @@ import instrumentos.logic.Instrumento;
 import instrumentos.logic.Service;
 import instrumentos.logic.Calibraciones;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,7 +66,7 @@ public class Controller {
             updateNumerosSecuenciales();
             // Actualiza la vista con la lista modificada
             int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
-            view.getList().setModel(new TableModel(cols, model.getList()));
+            view.getList().setModel(new TableModel(cols, model.getInstrumento().getCalibraciones()));
             model.getCurrent().disminuirCantidad();
         } else {
             throw new Exception("Error al eliminar el elemento...");
@@ -85,20 +86,20 @@ public class Controller {
         model.setInstrumento(Calibraciones.getInstrumento());
 
         String textoInstrumento;
+        List<Calibraciones> calibracionesDelInstrumento = model.getInstrumento().getCalibraciones();
+
         if (!model.getInstrumento().getSerie().isEmpty()) {
             textoInstrumento = model.getInstrumento().getSerie() + " - " + model.getInstrumento().getDescripcion() + "(" + model.getInstrumento().getMinimo() + "-" + model.getInstrumento().getMaximo() + " Grados Celsius)";
-
-            // Filtra las calibraciones del instrumento actual
-            List<Calibraciones> calibracionesDelInstrumento = model.getInstrumento().getCalibraciones();
-
-            // Actualiza la tabla con la lista filtrada de calibraciones
-            int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
-            view.getList().setModel(new TableModel(cols, calibracionesDelInstrumento));
         } else {
             textoInstrumento = "Ningún instrumento seleccionado.";
+            calibracionesDelInstrumento = new ArrayList<>(); // Crea una lista vacía
         }
+
+        // Actualiza la tabla con la lista de calibraciones (puede estar vacía)
+        int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
+        view.getList().setModel(new TableModel(cols, calibracionesDelInstrumento));
+
         return textoInstrumento;
     }
-
 
 }
