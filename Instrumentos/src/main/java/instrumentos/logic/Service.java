@@ -1,10 +1,10 @@
 package instrumentos.logic;
 
-import com.itextpdf.layout.element.Paragraph;
+
 import instrumentos.data.Data;
 import instrumentos.data.XmlPersister;
 
-import javax.swing.text.Document;
+
 import java.io.*;
 import java.io.FileOutputStream;
 import java.util.Comparator;
