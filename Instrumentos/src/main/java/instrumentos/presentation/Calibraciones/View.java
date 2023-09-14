@@ -10,7 +10,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class View implements Observer {
     private JPanel panel;
@@ -46,6 +47,14 @@ public class View implements Observer {
                 instruField.setForeground(Color.RED);
                 instruField.setText(controller.shown());
                 clearTextFields();  //agregado por los loles
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date fechaActual = new Date();
+                String fechaActualFormateada = dateFormat.format(fechaActual);
+
+                // Establecer la fecha actual formateada como valor por defecto en el TextField 'fecha'
+                fecha.setText(fechaActualFormateada);
+
                 Mediciones.setVisible(false);  //agregado por los loles
             }
         });
@@ -79,6 +88,10 @@ public class View implements Observer {
         save.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date fechaActual = new Date();
+                String fechaActualFormateada = dateFormat.format(fechaActual);
+                fecha.setText(fechaActualFormateada);
                 Calibraciones filter = new Calibraciones(null,fecha.getText(),Integer.parseInt(mediciones.getText()));
                 //filter.setMediciones(Integer.parseInt(mediciones.getText()));
                 //filter.setFecha(fecha.getText());

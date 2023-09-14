@@ -157,7 +157,7 @@ public class Service {
             return ins.getCalibraciones();
         }
         return instru.getCalibraciones().stream()
-                .filter(i->i.getNumero()!=(e.getNumero()))
+                .filter(i->i.getNumero()==(e.getNumero()))
                 .sorted(Comparator.comparing(Calibraciones::getNumero))  // lo cambiamos a ::getUNidad en clase, pero estaba en ::getNombre...
                 .collect(Collectors.toList());
     }

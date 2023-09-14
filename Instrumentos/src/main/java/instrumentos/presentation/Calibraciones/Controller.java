@@ -23,14 +23,33 @@ public class Controller {
     }
 
     public void search(Instrumento instru, Calibraciones filter) throws Exception {   // hay que pasarle instrumento tambien
+
+        List<Calibraciones> existentes = instru.getCalibraciones();
+
         List<Calibraciones> rows = Service.instance().search(instru, filter);
-        if (rows.isEmpty()) {
+        if (existentes.isEmpty()) {
+            model.setList(rows);
+            instru.setCalibraciones(rows);
+            model.setCurrent(rows.get(0));
+            model.commit();
+            instru.setCalibraciones(existentes);
             throw new Exception("NINGUN REGISTRO COINCIDE");
         }
+
+        if(rows.isEmpty()){
+            model.setList(rows);
+            instru.setCalibraciones(rows);
+            model.setCurrent(rows.get(0));
+            model.commit();
+            instru.setCalibraciones(existentes);
+        throw new Exception("NO EXISTE CALIBRACIÓN CON ESE NÚMERO");
+        }
+
         model.setList(rows);
-        model.getInstrumento().setCalibraciones(rows);
+        instru.setCalibraciones(rows);
         model.setCurrent(rows.get(0));
         model.commit();
+        instru.setCalibraciones(existentes);
     }
 
     public void edit(int row) throws Exception {     //cambiado
@@ -46,8 +65,10 @@ public class Controller {
         }
         if (model.getMode() == 1) {
             Service.instance().create(model.getInstrumento(), e);
+            model.setList(Service.instance().search(model.getInstrumento(), new Calibraciones()));
+            model.commit();
             //model.getInstrumento().getCalibraciones().add(e);
-            this.search(model.getInstrumento(), new Calibraciones());
+            //this.search(model.getInstrumento(), new Calibraciones());
         }
         if (model.getMode() == 2) {
             Service.instance().update(model.getInstrumento(), e);
