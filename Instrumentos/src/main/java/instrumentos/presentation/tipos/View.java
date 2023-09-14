@@ -147,10 +147,7 @@ public class View implements Observer {
     }
 
     public void clearTextFields(){
-        model.setMode(Application.MODE_CREATE);
-        codigo.setText(null);
-        nombre.setText(null);
-        unidad.setText(null);
+        controller.clear();
         codigo.setEnabled(true);
         delete.setEnabled(false);
     }

@@ -4,6 +4,8 @@ import instrumentos.Application;
 import instrumentos.logic.Service;
 import instrumentos.logic.TipoInstrumento;
 
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,5 +69,24 @@ public class Controller{
             throw new Exception("No se puede eliminar el Tipo, ya que tiene instancias");
         }
 
+    }
+
+    public void clear(){
+        model.setCurrent(new TipoInstrumento());
+        model.setMode(Application.MODE_CREATE);
+        model.commit();
+    }
+
+    public void imprimir(){
+        try{
+            List<TipoInstrumento> list = new ArrayList<>();
+            for(int i = 0; i < model.getList().size(); i++){
+                list.add(model.getList().get(i));
+            }
+            File file = new File("reporteTipo.pdf");
+            Service.instance().reporteTipo(list, file);
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
 }

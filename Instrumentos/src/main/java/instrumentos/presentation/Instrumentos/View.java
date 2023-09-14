@@ -149,7 +149,7 @@ public class View implements Observer {
             list.setModel(new TableModel(cols, model.getList()));
             list.setRowHeight(30);
             TableColumnModel columnModel = list.getColumnModel();
-            columnModel.getColumn(2).setPreferredWidth(200);
+            columnModel.getColumn(1).setPreferredWidth(200);
         }
         if((changedProps & Model.TYPES)== Model.TYPES){
             tipo.setModel(new DefaultComboBoxModel(model.getListTypes().toArray(new TipoInstrumento[0])));
