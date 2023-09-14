@@ -39,7 +39,7 @@ public class Controller {
         if(rows.isEmpty()){
             model.setList(rows);
             instru.setCalibraciones(rows);
-            model.setCurrent(rows.get(0));
+            //model.setCurrent(rows.get(0));
             model.commit();
             instru.setCalibraciones(existentes);
         throw new Exception("NO EXISTE CALIBRACIÓN CON ESE NÚMERO");
@@ -56,6 +56,8 @@ public class Controller {
         model.setMode(Application.MODE_EDIT);
         Calibraciones e = model.getInstrumento().getCalibraciones().get(row);
         model.setCurrent(e);
+        model.commit();
+        model.setListmed(e.getMedicionesList());
         model.commit();
     }
 

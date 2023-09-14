@@ -2,6 +2,7 @@ package instrumentos.presentation.Calibraciones;
 
 import instrumentos.logic.Calibraciones;
 import instrumentos.logic.Instrumento;
+import instrumentos.logic.Mediciones;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -9,10 +10,12 @@ import java.util.List;
 public class TableModelMediciones extends AbstractTableModel implements javax.swing.table.TableModel {
 
     //Instrumento inst;
-    List<Calibraciones> rows;
+
+    Calibraciones cali;
+    List<Mediciones> rows;
     int[] cols;
 
-    public TableModelMediciones(int[] cols, List<Calibraciones> rows){
+    public TableModelMediciones(int[] cols, List<Mediciones> rows){
         this.cols=cols;
         this.rows=rows;
         initColNames();
@@ -32,33 +35,39 @@ public class TableModelMediciones extends AbstractTableModel implements javax.sw
         }
     }
 
+
     public int getRowCount() {
+        if(rows==null){
+            return 0;
+        }
         return rows.size();
     }
 
+
+
     public Object getValueAt(int row, int col) {
-        Calibraciones sucursal = rows.get(row);
+        Mediciones sucursal = rows.get(row);
         switch (cols[col]){
-            case NUMERO: return sucursal.getNumero();
-            case FECHA: return sucursal.getFecha();
-            case MEDICIONES: return sucursal.getMediciones();
+            case MEDIDA: return sucursal.getMedida();
+            case REFERENCIA: return sucursal.getReferencia();
+            case LECTURA: return sucursal.getLectura();
             default: return "";
         }
     }
 
-    public Calibraciones getRowAt(int row) {
+    public Mediciones getRowAt(int row) {
         return rows.get(row);
     }
 
-    public static final int NUMERO=0;
-    public static final int FECHA=1;
-    public static final int MEDICIONES=2;
+    public static final int MEDIDA=0;
+    public static final int REFERENCIA=1;
+    public static final int LECTURA=2;
 
     String[] colNames = new String[6];
     private void initColNames(){
-        colNames[NUMERO]= "Número";
-        colNames[FECHA]= "Fecha";
-        colNames[MEDICIONES]= "Mediciones";
+        colNames[MEDIDA]= "Medida";
+        colNames[REFERENCIA]= "Referencia";
+        colNames[LECTURA]= "Lectura";
     }
 
 }

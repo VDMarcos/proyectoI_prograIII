@@ -77,6 +77,7 @@ public class View implements Observer {
                 model.setMode(Application.MODE_EDIT);
                 try {
                     Mediciones.setVisible(true);
+                    Mediciones.setEnabled(true);
                     controller.edit(row);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -92,7 +93,7 @@ public class View implements Observer {
                 Date fechaActual = new Date();
                 String fechaActualFormateada = dateFormat.format(fechaActual);
                 fecha.setText(fechaActualFormateada);
-                Calibraciones filter = new Calibraciones(null,fecha.getText(),Integer.parseInt(mediciones.getText()));
+                Calibraciones filter = new Calibraciones(model.getInstrumento(),fecha.getText(),Integer.parseInt(mediciones.getText()));
                 //filter.setMediciones(Integer.parseInt(mediciones.getText()));
                 //filter.setFecha(fecha.getText());
                // filter.setNumero(Integer.parseInt(numero.getText()));
@@ -149,21 +150,33 @@ public class View implements Observer {
     @Override
     public void update(Observable updatedModel, Object properties) {
         int changedProps = (int) properties;
+
         if ((changedProps & Model.LIST) == Model.LIST) {
             int[] cols = {TableModel.NUMERO, TableModel.FECHA, TableModel.MEDICIONES};
             list.setModel(new TableModel(cols, model.getInstrumento().getCalibraciones()));
             list.setRowHeight(30);
             TableColumnModel columnModel = list.getColumnModel();
             columnModel.getColumn(2).setPreferredWidth(200);
-            //list.setRowSelectionInterval(0, 0);
         }
+
+        if ((changedProps & Model.LIST2) == Model.LIST2) {
+            // Aquí configurarías la segunda tabla (list2) de manera similar a como lo hiciste con la primera tabla (list)
+            // Puedes crear un nuevo modelo, configurar columnas, etc., según tus necesidades
+            // Por ejemplo:
+            int[] cols2 = {TableModelMediciones.MEDIDA, TableModelMediciones.REFERENCIA, TableModelMediciones.LECTURA};
+            list2.setModel(new TableModelMediciones(cols2, model.getCurrent().getMedicionesList()));
+            list2.setRowHeight(30);
+        }
+
         if ((changedProps & Model.CURRENT) == Model.CURRENT) {
             numero.setText(String.valueOf(model.getCurrent().getNumero()));
             mediciones.setText(String.valueOf(model.getCurrent().getMediciones()));
             fecha.setText(model.getCurrent().getFecha());
         }
+
         this.panel.revalidate();
     }
+
 
     public void clearTextFields(){
         model.setMode(Application.MODE_CREATE);
