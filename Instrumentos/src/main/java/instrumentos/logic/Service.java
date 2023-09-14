@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.io.*;
 
 public class Service {
     private static Service theInstance;
@@ -109,8 +110,8 @@ public class Service {
 
     public List<Instrumento> search(Instrumento e){
         return data.getInstrumentos().stream()
-                .filter(i->i.getSerie().contains(e.getSerie()))
-                .sorted(Comparator.comparing(Instrumento::getSerie))
+                .filter(i->i.getDescripcion().contains(e.getDescripcion()))
+                .sorted(Comparator.comparing(Instrumento::getDescripcion))
                 .collect(Collectors.toList());
     }
 

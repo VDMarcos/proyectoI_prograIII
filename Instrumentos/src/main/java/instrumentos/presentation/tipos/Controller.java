@@ -6,6 +6,7 @@ import instrumentos.logic.TipoInstrumento;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 public class Controller{
     View view;
@@ -68,4 +69,10 @@ public class Controller{
         }
 
     }
+    public void clear(){
+        model.setCurrent(new TipoInstrumento());
+        model.setMode(Application.MODE_CREATE);
+        model.commit();
+    }
+
 }
